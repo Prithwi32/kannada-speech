@@ -48,7 +48,8 @@ def analyze_soda():
 
 # ✅ This block must exist at the end to actually run Flask
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    # Use PYTHON_PORT to avoid conflict with Node.js PORT
+    port = int(os.environ.get("PYTHON_PORT", 5000))
     print(f"🚀 Starting Flask server on http://127.0.0.1:{port}")
     app.run(host="0.0.0.0", port=port, debug=True)
 
