@@ -1,150 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="kn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ಆಡ್ಮಿನ್ ಲಾಗಿನ್</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ಆಡ್ಮಿನ್ ಲಾಗಿನ್</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .login-container {
-      background: white;
-      padding: 2.5rem;
-      border-radius: 15px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-    }
+      .login-container {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+      }
 
-    .admin-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: #667eea;
-    }
+      .admin-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #667eea;
+      }
 
-    h1 {
-      color: #333;
-      margin-bottom: 0.5rem;
-      font-size: 1.8rem;
-    }
+      h1 {
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-size: 1.8rem;
+      }
 
-    .subtitle {
-      color: #666;
-      margin-bottom: 2rem;
-      font-size: 0.9rem;
-    }
+      .subtitle {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+      }
 
-    .form-group {
-      margin-bottom: 1.5rem;
-      text-align: left;
-    }
+      .form-group {
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
 
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      color: #555;
-      font-weight: 500;
-    }
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+        font-weight: 500;
+      }
 
-    input {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #e1e5e9;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-    }
+      input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
 
-    input:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
 
-    .login-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
+      .login-btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
 
-    .login-btn:hover {
-      transform: translateY(-2px);
-    }
+      .login-btn:hover {
+        transform: translateY(-2px);
+      }
 
-    .login-btn:active {
-      transform: translateY(0);
-    }
+      .login-btn:active {
+        transform: translateY(0);
+      }
 
-    .error-message {
-      color: #e74c3c;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
+      .error-message {
+        color: #e74c3c;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
 
-    .back-link {
-      margin-top: 1.5rem;
-      display: block;
-      color: #667eea;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
+      .back-link {
+        margin-top: 1.5rem;
+        display: block;
+        color: #667eea;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
 
-    .back-link:hover {
-      text-decoration: underline;
-    }
+      .back-link:hover {
+        text-decoration: underline;
+      }
 
-    .loading {
-      opacity: 0.7;
-      pointer-events: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-container">
-    <div class="admin-icon">👨‍💼</div>
-    <h1>ಆಡ್ಮಿನ್ ಲಾಗಿನ್</h1>
-    <p class="subtitle">ನಿರ್ವಾಹಕ ಪ್ರವೇಶಕ್ಕಾಗಿ ನಿಮ್ಮ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ</p>
-    
-    <form id="adminLoginForm">
-      <div class="form-group">
-        <label for="username">ಬಳಕೆದಾರ ಹೆಸರು</label>
-        <input type="text" id="username" name="username" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="password">ಗುಪ್ತಪದ</label>
-        <input type="password" id="password" name="password" required>
-      </div>
-      
-      <button type="submit" class="login-btn">ಲಾಗಿನ್ ಮಾಡಿ</button>
-    </form>
-    
-    <div id="errorMessage" class="error-message" style="display: none;"></div>
-    
-    <a href="index.html" class="back-link">← ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</a>
-  </div>
+      .loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="admin-icon">👨‍💼</div>
+      <h1>ಆಡ್ಮಿನ್ ಲಾಗಿನ್</h1>
+      <p class="subtitle">ನಿರ್ವಾಹಕ ಪ್ರವೇಶಕ್ಕಾಗಿ ನಿಮ್ಮ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ</p>
 
-  <script src="js/admin-login.js"></script>
-</body>
-</html> 
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label for="username">ಬಳಕೆದಾರ ಹೆಸರು</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">ಗುಪ್ತಪದ</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <button type="submit" class="login-btn">ಲಾಗಿನ್ ಮಾಡಿ</button>
+      </form>
+
+      <div id="errorMessage" class="error-message" style="display: none"></div>
+
+      <a href="index.html" class="back-link">← ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ</a>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/admin-login.js"></script>
+  </body>
+</html>

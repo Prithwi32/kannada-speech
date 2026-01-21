@@ -1,5 +1,5 @@
 document.getElementById("downloadBtn").addEventListener("click", () => {
-  fetch('http://localhost:3000/download-reference-pdf')
+  fetch('${API_BASE_URL}/download-reference-pdf')
     .then(response => response.blob())
     .then(blob => {
       const url = window.URL.createObjectURL(blob);
@@ -12,3 +12,4 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
       window.URL.revokeObjectURL(url);
     });
 });
+

@@ -14,7 +14,8 @@ const connectDB = async () => {
     console.log("✅ MongoDB connected successfully");
   } catch (error) {
     console.error("❌ MongoDB connection error:", error.message);
-    process.exit(1);
+    console.warn("⚠️  Using JSON fallback mode");
+    // Don't exit - allow server to continue with JSON fallback
   }
 };
 

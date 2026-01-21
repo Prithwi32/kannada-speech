@@ -7,12 +7,12 @@ console.log(`Testing API at: ${testURL}\n`);
 
 // Test 1: Health check
 fetch(`${testURL}/api/children`)
-  .then(res => res.json())
-  .then(data => {
+  .then((res) => res.json())
+  .then((data) => {
     console.log("✅ GET /api/children - SUCCESS");
     console.log(`   Found ${data.length} children`);
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("❌ GET /api/children - FAILED");
     console.error(`   Error: ${err.message}`);
   });
@@ -24,11 +24,11 @@ setTimeout(() => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       username: process.env.ADMIN_USERNAME || "admin",
-      password: process.env.ADMIN_PASSWORD || "admin1"
-    })
+      password: process.env.ADMIN_PASSWORD || "admin1",
+    }),
   })
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       if (data.success) {
         console.log("\n✅ POST /api/admin/login - SUCCESS");
         console.log(`   Token: ${data.token.substring(0, 20)}...`);
@@ -37,7 +37,7 @@ setTimeout(() => {
         console.log(`   Message: ${data.message}`);
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("\n❌ POST /api/admin/login - FAILED");
       console.error(`   Error: ${err.message}`);
     });
@@ -49,15 +49,15 @@ setTimeout(() => {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      target_word: "test"
-    })
+      target_word: "test",
+    }),
   })
-    .then(res => res.text())
-    .then(data => {
+    .then((res) => res.text())
+    .then((data) => {
       console.log("\n✅ POST /api/analyze - Response received");
       console.log(`   Status: ${data.substring(0, 50)}...`);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("\n❌ POST /api/analyze - FAILED");
       console.error(`   Error: ${err.message}`);
     });

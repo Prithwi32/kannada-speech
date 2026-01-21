@@ -10,7 +10,7 @@
 //     showWord(words[currentIndex]);
 
 //     window.nextWord = () => {
-     
+
 //       currentIndex++;
 //       if (currentIndex < words.length) {
 //         showWord(words[currentIndex]);
@@ -64,18 +64,17 @@
 //       }
 //     };
 
-
 //     async function analyzeWord(targetWord, audioBlob) {
 //       const formData = new FormData();
 //       formData.append("target_word", targetWord);
 //       formData.append("audio", audioBlob, "recording.wav");
-    
+
 //       try {
 //         const response = await fetch("http://127.0.0.1:5000/analyze_soda", {
 //           method: "POST",
 //           body: formData
 //         });
-    
+
 //         const result = await response.json();
 //         if (response.ok) {
 //           console.log("✅ SODA Analysis Result:", result);
@@ -89,8 +88,7 @@
 //         alert("Failed to connect to backend");
 //       }
 //     }
-    
-    
+
 //   function playSpeech(word) {
 //   const url = `http://localhost:3000/tts?text=${encodeURIComponent(word)}&lang=kn`;
 //   const audio = document.getElementById("audio");
@@ -99,12 +97,10 @@
 //   audio.style.display = "block";
 // }
 
-
 //   function showWord(wordObj) {
 //   document.getElementById('word').textContent = wordObj.word;
 //   document.getElementById('image').src = `assets/images/${wordObj.image}`;
-  
-  
+
 //   // Generate and play the TTS audio
 //   playSpeech(wordObj.word);
 
@@ -134,10 +130,8 @@
 
 //     letterButtons.appendChild(btn);
 //   });
-  
 
 // }
-
 
 // function splitIntoAksharas(word) {
 //   const aksharas = [];
@@ -182,23 +176,18 @@
 //   setTimeout(() => confetti.remove(), 2000);
 // }
 
-
-
 //   });
-
-
 
 let currentIndex = 0;
 let mediaRecorder;
 let audioChunks = [];
 let currentAudioBlob = null;
 
-let sodaResults = [];   // ✅ STORE ALL WORD RESULTS
-
+let sodaResults = []; // ✅ STORE ALL WORD RESULTS
 
 fetch("assets/data/words.json")
-  .then(res => res.json())
-  .then(data => {
+  .then((res) => res.json())
+  .then((data) => {
     const age = localStorage.getItem("selectedAge");
     const words = data[age];
     showWord(words[currentIndex]);
@@ -210,7 +199,7 @@ fetch("assets/data/words.json")
       } else {
         // ✅ SAVE EVERYTHING
         localStorage.setItem("sodaResults", JSON.stringify(sodaResults));
-        
+
         window.location.href = "report.html";
       }
     };
@@ -233,7 +222,7 @@ function showWord(wordObj) {
 
 function playSpeech(word) {
   const audio = document.getElementById("audio");
-  audio.src = `http://localhost:3000/tts?text=${encodeURIComponent(word)}&lang=kn`;
+  audio.src = `${API_BASE_URL}/tts?text=${encodeURIComponent(word)}&lang=kn`;
 }
 
 /* ---------------- RECORDING ---------------- */
@@ -246,13 +235,12 @@ const recording_status = document.getElementById("status");
 // const age_selected = localStorage.getItem("selectedAge");
 // if(age_selected == '2')
 
-
 recordBtn.onclick = async () => {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   mediaRecorder = new MediaRecorder(stream);
   audioChunks = [];
 
-  mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+  mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
   mediaRecorder.onstop = () => {
     currentAudioBlob = new Blob(audioChunks, { type: "audio/wav" });
     analyzeBtn.disabled = false;
@@ -286,7 +274,7 @@ analyzeBtn.onclick = async () => {
   try {
     const res = await fetch("http://127.0.0.1:5000/analyze_soda", {
       method: "POST",
-      body: formData
+      body: formData,
     });
 
     const result = await res.json();
@@ -298,15 +286,15 @@ analyzeBtn.onclick = async () => {
       spoken_phonemes: result.spoken_phonemes || [],
       error_type: result.error_type || "",
       distortion_score: result.distortion_score || 0,
-      error_syllables: result.error_syllables || []
+      error_syllables: result.error_syllables || [],
     });
 
     // if (result.err)
     // resultBox.textContent = JSON.stringify(result, null, 2);
     recording_status.textContent = "✅ ವಿಶ್ಲೇಷಣೆ ಯಶಸ್ವಿಯಾಗಿ ಪೂರ್ಣಗೊಂಡಿದೆ";
-
   } catch (err) {
     console.error(err);
-    recording_status.textContent = "❌ ಸ್ವಲ್ಪ ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ";
+    recording_status.textContent =
+      "❌ ಸ್ವಲ್ಪ ದೋಷ ಸಂಭವಿಸಿದೆ, ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ";
   }
 };
