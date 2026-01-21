@@ -39,6 +39,10 @@ COPY backend ./backend
 WORKDIR /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install txt2ipa local package
+WORKDIR /app/backend/txt2ipa
+RUN pip install --no-cache-dir -e .
+
 # Setup supervisord to run both servers
 WORKDIR /app
 RUN echo "[supervisord]\n\
