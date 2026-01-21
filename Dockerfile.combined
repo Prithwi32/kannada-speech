@@ -42,34 +42,34 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Setup supervisord to run both servers
 WORKDIR /app
 RUN echo "[supervisord]\n\
-nodaemon=true\n\
-\n\
-[program:python-backend]\n\
-command=python backend/app.py\n\
-directory=/app\n\
-autostart=true\n\
-autorestart=true\n\
-stderr_logfile=/dev/stderr\n\
-stderr_logfile_maxbytes=0\n\
-stdout_logfile=/dev/stdout\n\
-stdout_logfile_maxbytes=0\n\
-\n\
-[program:node-backend]\n\
-command=node server.js\n\
-directory=/app\n\
-autostart=true\n\
-autorestart=true\n\
-stderr_logfile=/dev/stderr\n\
-stderr_logfile_maxbytes=0\n\
-stdout_logfile=/dev/stdout\n\
-stdout_logfile_maxbytes=0" > /etc/supervisor/conf.d/supervisord.conf
+    nodaemon=true\n\
+    \n\
+    [program:python-backend]\n\
+    command=python backend/app.py\n\
+    directory=/app\n\
+    autostart=true\n\
+    autorestart=true\n\
+    stderr_logfile=/dev/stderr\n\
+    stderr_logfile_maxbytes=0\n\
+    stdout_logfile=/dev/stdout\n\
+    stdout_logfile_maxbytes=0\n\
+    \n\
+    [program:node-backend]\n\
+    command=node server.js\n\
+    directory=/app\n\
+    autostart=true\n\
+    autorestart=true\n\
+    stderr_logfile=/dev/stderr\n\
+    stderr_logfile_maxbytes=0\n\
+    stdout_logfile=/dev/stdout\n\
+    stdout_logfile_maxbytes=0" > /etc/supervisor/conf.d/supervisord.conf
 
 # Expose port
 EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:3000/api/children || exit 1
+    CMD curl -f http://localhost:3000/api/children || exit 1
 
 # Start both servers with supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
