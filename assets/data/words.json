@@ -1,0 +1,39 @@
+{
+  "2": [
+    { "word": "ಅಮ್ಮ", "image": "amma.jpg" },{"word":"ಅನ್ನ","image":"anna.jpg"},{"word":"ಅಂಗಡಿ","image":"angadi.jpeg"},
+    { "word": "ಆನೆ", "image": "aane.jpg" }, {"word": "ಆಟೋ","image": "auto.jpg"},{"word": "ಆಲೂ","image": "potato.png"},
+    { "word": "ಇಲಿ", "image": "rat.jpg" }, {"word": "ಇರುವೆ","image": "eruve.jpg"},
+    { "word": "ಈರುಳ್ಳಿ", "image": "onion.jpg" },
+    {"word":"ಉಪ್ಪು","image":"uppu.jpg"},
+    { "word": "ಊಟ", "image": "uta.jpg" }, 
+    {"word": "ಎಲೆ","image": "leaf.jpg"},{"word":"ಎಮ್ಮೆ","image":"emme.jpg"},
+    {"word": "ಒಂದು","image": "one.jpg"},{"word": "ಓಲೆ","image": "oole.jpg"},{ "word": "ಓಡು", "image": "run.jpg" }
+      
+  ],
+  
+  "5": [
+    {"word": "ಕಣ್ಣು","image": "eye.jpeg"},{"word": "ಕಾಲು","image": "leg.jpg"},{"word":"ಕಿವಿ" ,"image":"ear.jpg" },{"word":"ಕೂದಲು" ,"image":"hair.jpg" },{"word":"ಕೇಕ್" ,"image":"cake.jpg" },{"word":"ಕುದುರೆ" ,"image":"horse.jpeg" },
+    {"word":"ಗಿಡ" ,"image":"plant.jpg" },{"word":"ಗೇಟು" ,"image":"gate.jpg" },{"word":"ಗೋಡೆ" ,"image":"wall.png" },{"word":"ಗನ್ನು" ,"image":"gun.png" },
+    {"word":"ತಾತ" ,"image":"ajja.jpg" },{"word":"ತಿಂಡಿ" ,"image":"thindi.jpg" },{"word":"ತಟ್ಟೆ" ,"image":"plate.jpg" },{"word":"ಬಾತು" ,"image":"baath.jpg" },{"word":"ತಪ್ಪು" ,"image":"wrong.png" },
+    {"word":"ದೋಸೆ" ,"image":"dosa.png" },{"word":"ದೇವರು" ,"image":"god.jpg" },{"word":"ದೀಪ" ,"image":"deepa.jpg" },{"word":"ದುಡ್ಡು" ,"image":"money.png" },
+    {"word":"ನೀರು" ,"image":"water.png" },{"word":"ನಾಯಿ" ,"image":"dog.jpg" },{"word":"ಮನೆ" ,"image":"house.jpeg" },
+    {"word":"ಬಟ್ಟೆ" ,"image":"cloths.jpg" },{"word":"ಬಾಲು" ,"image":"ball.jpeg" },{"word":"ಬೀಗ" ,"image":"lock.jpg" },{"word":"ಬಾಗಿಲು" ,"image":"door.jpg" },{"word":"ಗೊಂಬೆ" ,"image":"gombe.jpeg" },
+    {"word":"ಪಾಯಸ" ,"image":"paayasa.jpg" },{"word":"ಮರ" ,"image":"tree.jpg" },{"word":"ಮಂಚ" ,"image":"cot.png" },{"word":"ಮಳೆ" ,"image":"rain.jpg" },
+    {"word":"ಟಿವಿ" ,"image":"tv.png" },{"word":"ವಾಚ್" ,"image":"watch.png" },{"word":"ಬಾವುಟ" ,"image":"flag.jpeg" },
+    {"word":"ಲಾಡು" ,"image":"laadu.jpg" },{"word":"ಲಿಂಗ" ,"image":"linga.jpg" }, {"word":"ಹಲ್ಲಿ" ,"image":"lizard.jpg" },
+    {"word":"ಚೇರು" ,"image":"chair.jpg" },{"word":"ಚಾಕು" ,"image":"chaaku.jpg" },{"word":"ಚೀತಾ" ,"image":"cheeta.jpg" },{"word":"ಚಪಾತಿ" ,"image":"chapathi.jpg" },{"word":"ಚಪ್ಪಲಿ" ,"image":"sliper.jpeg" },
+    {"word":"ಜಿಂಕೆ" ,"image":"jinke.png" },{"word":"ಜಡೆ" ,"image":"jade.jpg" },{"word":"ಜೇನು" ,"image":"honey.jpeg" },{"word":"ಕಜ್ಜಾಯ" ,"image":"kajjaya.jpeg" },{"word":"ಜಾಮೂನು" ,"image":"jamun.jpg" },
+    {"word":"ಟೇಬಲ್" ,"image":"table.jpg" },{"word":"ಟಗರು" ,"image":"tagaru.jpg" },{"word":"ಟೊಮೊಟೊ" ,"image":"tomato.jpg" },{"word":"ಟೈರು" ,"image":"tair.jpg" }
+  ],
+  "7": [
+     {"word":"ರೇಡಿಯೋ" ,"image":"radio.jpg" },
+    {"word":"ದೋಣಿ" ,"image":"doni.jpeg" },{"word":"ಹಣ್ಣು" ,"image":"fruits.jpeg" },{"word":"ಬಣ್ಣ" ,"image":"colors.jpg" },
+    {"word":"ಸರಿ" ,"image":"right.png" },{"word":"ಸ್ನಾನ" ,"image":"snana.jpg" },{"word":"ಸೀಬೆ" ,"image":"gova.jpg" },{"word":"ಸಿಂಹ" ,"image":"lion.jpeg" },
+    {"word":"ಕಾರು" ,"image":"car.jpg" },{"word":"ರೊಟ್ಟಿ" ,"image":"rotti.jpg" },{"word":"ರೋಡ್" ,"image":"road.jpg" },{"word":"ಕರಡಿ" ,"image":"karadi.jpg" },
+    {"word":"ಬಳೆ" ,"image":"bangle.jpg" },{"word":"ಹಳ್ಳಿ" ,"image":"village.jpg" },{"word":"ಕಾಳು" ,"image":"kalu.jpg" },
+    {"word":"ಶೀತ" ,"image":"cold.jpeg" },{"word":"ಶರ್ಟ್" ,"image":"shirt.jpg" },{"word":"ಗಣೇಶ" ,"image":"ganesha.jpg" },{"word":"ಶೇವ್" ,"image":"shave.jpeg" }
+   
+  ]
+}
+
+  

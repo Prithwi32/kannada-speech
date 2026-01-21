@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಮಗುವಿನ ವಿವರಗಳು</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    .child-details-section {
+      width: fit-content;
+      min-width: 600px;
+      margin: 30px auto 20px auto;
+      padding: 20px;
+      background: #f3e5f5;
+      border-radius: 12px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .child-details-section table {
+      width: 100%;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    @media (max-width: 900px) {
+      .child-details-section {
+        min-width: unset;
+        width: 98vw;
+        padding: 8px;
+      }
+      .child-details-section table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body style="text-align: center; background: linear-gradient(to bottom right, #fef9f9, #d1c4e9); padding-top: 50px; font-family: 'Noto Sans Kannada', sans-serif;">
+  <div id="global-header"></div>
+
+  <div class="child-details-section">
+    <h2 style="color:#4a148c;">ಮಗುವಿನ ವಿವರಗಳು</h2>
+    <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;">
+      <label for="ageFilter">ವಯಸ್ಸು:</label>
+      <select id="ageFilter" style="padding:5px 10px;">
+        <option value="">ಎಲ್ಲಾ</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+      </select>
+      <input type="text" id="searchBar" placeholder="ಹೆಸರು/ಪೋಷಕರು/ನಗರ" style="padding:5px 10px;flex:1;min-width:120px;">
+      <button onclick="fetchChildDetails()" style="background:#7c43bd;color:white;padding:6px 16px;border:none;border-radius:6px;">ಹುಡುಕಿ</button>
+    </div>
+    <div id="childDetailsResults"></div>
+  </div>
+
+  <script>
+    function fetchChildDetails() {
+      const age = document.getElementById('ageFilter').value;
+      const search = document.getElementById('searchBar').value;
+      let url = 'http://localhost:3000/api/children?';
+      if (age) url += `age=${age}&`;
+      if (search) url += `search=${encodeURIComponent(search)}&`;
+      fetch(url)
+        .then(res => res.json())
+        .then(data => renderChildDetailsTable(data));
+    }
+
+    function renderChildDetailsTable(children) {
+      const container = document.getElementById('childDetailsResults');
+      if (!children.length) {
+        container.innerHTML = '<div style="color:#b71c1c;">ಯಾವುದೇ ವಿವರಗಳು ಲಭ್ಯವಿಲ್ಲ</div>';
+        return;
+      }
+      let html = '<table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;">';
+      html += '<tr style="background:#ede7f6;">'
+        +'<th style="padding:8px;">ಹೆಸರು</th>'
+        +'<th style="padding:8px;">ವಯಸ್ಸು</th>'
+        +'<th style="padding:8px;">ಲಿಂಗ</th>'
+        +'<th style="padding:8px;">ಪೋಷಕರು</th>'
+        +'<th style="padding:8px;">ನಗರ</th>'
+        +'<th style="padding:8px;">ಇಮೇಲ್</th>'
+        +'<th style="padding:8px;">ವಿಳಾಸ</th>'
+        +'<th style="padding:8px;">ದೂರವಾಣಿ</th>'
+        +'</tr>';
+      for (const c of children) {
+        const name = c['ಹೆಸರು'] || '';
+        const age = c['ವಯಸ್ಸು'] || '';
+        const gender = c['ಲಿಂಗ'] || '';
+        const parent = c['ಪೋಷಕರು'] || '';
+        const city = c['ನಗರ'] || '';
+        const email = c['ಇಮೇಲ್'] || '';
+        const address = c['ವಿಳಾಸ'] || '';
+        const phone = c['ದೂರವಾಣಿ'] || '';
+        html += `<tr>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${name}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${age}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${gender}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${parent}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${city}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${email}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${address}</td>
+          <td style='padding:8px;border-bottom:1px solid #eee;'>${phone}</td>
+        </tr>`;
+      }
+      html += '</table>';
+      container.innerHTML = html;
+    }
+
+    window.addEventListener('DOMContentLoaded', fetchChildDetails);
+    document.getElementById('ageFilter').addEventListener('change', fetchChildDetails);
+    document.getElementById('searchBar').addEventListener('input', fetchChildDetails);
+  </script>
+  <script src="js/header.js"></script>
+  
+</body>
+</html> 

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ಬಳಕೆದಾರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dashboard-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .welcome-title {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .welcome-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .option-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .option-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+      border-color: #667eea;
+    }
+
+    .option-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .option-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .option-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .option-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .option-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .logout-section {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .logout-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 0 1rem;
+      }
+      
+      .welcome-title {
+        font-size: 2rem;
+      }
+      
+      .options-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="global-header"></div>
+
+  <div class="dashboard-container">
+    <div class="welcome-section">
+      <div class="welcome-title">ಸುಸ್ವಾಗತ!</div>
+      <div class="welcome-subtitle" id="userName">ಬಳಕೆದಾರ</div>
+    </div>
+
+    <div class="options-grid">
+      <div class="option-card" onclick="navigateToTest()">
+        <span class="option-icon">🧪</span>
+        <div class="option-title">ಪರೀಕ್ಷೆ/ಸ್ಕ್ರೀನಿಂಗ್</div>
+        <div class="option-description">
+          ನಿಮ್ಮ ಮಗುವಿನ ಕನ್ನಡ ಭಾಷಾ ಕೌಶಲ್ಯಗಳನ್ನು ಪರೀಕ್ಷಿಸಿ ಮತ್ತು ಅಭಿವೃದ್ಧಿ ಮಾಡಿ
+        </div>
+        <button class="option-btn">ಪರೀಕ್ಷೆ ಪ್ರಾರಂಭಿಸಿ</button>
+      </div>
+
+      <div class="option-card" onclick="navigateToProfile()">
+        <span class="option-icon">👤</span>
+        <div class="option-title">ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಿ</div>
+        <div class="option-description">
+          ನಿಮ್ಮ ಮಗುವಿನ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಸಂಪಾದಿಸಿ
+        </div>
+        <button class="option-btn">ಪ್ರೊಫೈಲ್ ತೆರೆಯಿರಿ</button>
+      </div>
+
+      <div class="option-card" onclick="navigateToReport()">
+        <span class="option-icon">📊</span>
+        <div class="option-title">ವರದಿ ವಿಭಾಗ</div>
+        <div class="option-description">
+          ನಿಮ್ಮ ಮಗುವಿನ ಪ್ರಗತಿ ವರದಿಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ
+        </div>
+        <button class="option-btn">ವರದಿ ವೀಕ್ಷಿಸಿ</button>
+      </div>
+    </div>
+
+    <div class="logout-section">
+      <button class="logout-btn" onclick="logout()">ಲಾಗ್‌ಔಟ್</button>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/header.js"></script>
+</body>
+</html> 

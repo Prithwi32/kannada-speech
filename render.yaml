@@ -1,0 +1,42 @@
+# Render.com Infrastructure as Code
+# This file automatically configures your Render deployment
+
+services:
+  # Combined Node.js + Python Web Service
+  - type: web
+    name: kannada-speech-assessment
+    env: docker
+    region: frankfurt # Change to: oregon, frankfurt, singapore
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile.combined
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: PYTHON_BACKEND_URL
+        value: http://localhost:5000
+      - key: FFMPEG_PATH
+        value: /usr/bin/ffmpeg
+      # Secrets - Add these in Render Dashboard
+      - key: MONGODB_URI
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_S3_BUCKET
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+    healthCheckPath: /api/children
+    autoDeploy: true

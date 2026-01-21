@@ -1,0 +1,6 @@
+Flask==3.0.3
+SpeechRecognition==3.10.0
+pydub==0.25.1
+parselmouth==0.4.3
+numpy==1.26.4
+scipy==1.13.1

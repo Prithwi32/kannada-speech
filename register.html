@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಮೊದಲ ಭೇಟಿ ನೋಂದಣಿ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="global-header"></div>
+  <form class="form" id="registerForm">
+    <h2>ಮಗುವಿನ ವಿವರವನ್ನು ನೋಂದಣಿ ಮಾಡಿ</h2>
+    <input type="text" id="name" placeholder="ಹೆಸರು*" required>
+    <select id="age" required>
+      <option value="" disabled selected>ವಯಸ್ಸು*</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+    </select>
+    <select id="gender" required>
+      <option value="" disabled selected>ಲಿಂಗ*</option>
+      <option value="Male">ಪುರುಷ</option>
+      <option value="Female">ಹೆಣ್ಣು</option>
+      <option value="Other">ಇತರ</option>
+    </select>
+    <input type="text" id="parent" placeholder="ಪೋಷಕರ ಹೆಸರು*" required>
+    <input type="text" id="city" placeholder="ನಗರ*" required>
+    <input type="email" id="email" placeholder="ಇಮೇಲ್*" required>
+    <input type="text" id="address" placeholder="ವಿಳಾಸ">
+    <input type="tel" id="phone" placeholder="ದೂರವಾಣಿ ಸಂಖ್ಯೆ">
+   
+    <div id="registerError" style="color:#b71c1c;margin-bottom:10px;"></div>
+    <button type="submit">ನೋಂದಣಿ ಮಾಡಿ</button>
+    <p style="text-align: center; margin-top: 15px;">
+      <a href="login.html" style="color: #2196F3; text-decoration: none;">ಈಗಾಗಲೇ ನೋಂದಣಿ ಮಾಡಿದ್ದೀರಾ? ಲಾಗಿನ್ ಪುಟಕ್ಕೆ ಹೋಗಿ</a>
+    </p>
+  </form>
+  <script src="js/register.js"></script>
+  <script src="js/header.js"></script>
+</body>
+</html> 

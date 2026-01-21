@@ -1,0 +1,75 @@
+# Multi-stage Dockerfile for Render.com Free Tier
+# Combines Node.js and Python backends in one container
+
+# Stage 1: Build Node.js
+FROM node:18-alpine AS node-builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Stage 2: Python Runtime
+FROM python:3.11-slim
+
+# Install Node.js, FFmpeg, and system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    ffmpeg \
+    nodejs \
+    npm \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy Node.js app
+COPY --from=node-builder /app/node_modules ./node_modules
+COPY package*.json ./
+COPY server-production.js ./server.js
+COPY config ./config
+COPY middleware ./middleware
+COPY models ./models
+COPY utils ./utils
+COPY assets ./assets
+COPY *.html ./
+COPY css ./css
+COPY js ./js
+
+# Copy Python backend
+COPY backend ./backend
+WORKDIR /app/backend
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Setup supervisord to run both servers
+WORKDIR /app
+RUN echo "[supervisord]\n\
+nodaemon=true\n\
+\n\
+[program:python-backend]\n\
+command=python backend/app.py\n\
+directory=/app\n\
+autostart=true\n\
+autorestart=true\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0\n\
+\n\
+[program:node-backend]\n\
+command=node server.js\n\
+directory=/app\n\
+autostart=true\n\
+autorestart=true\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
+stdout_logfile=/dev/stdout\n\
+stdout_logfile_maxbytes=0" > /etc/supervisor/conf.d/supervisord.conf
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:3000/api/children || exit 1
+
+# Start both servers with supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

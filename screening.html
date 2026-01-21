@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಪರೀಕ್ಷೆ</title>
+  <link rel="stylesheet" href="css/kid-ui.css">
+</head>
+<body>
+  <div class="game-card">
+
+    <h2 id="word" class="word-title">ಅಮ್ಮ</h2>
+  
+    <div class="image-wrapper">
+      <img id="image" alt="word image">
+    </div>
+  
+    <audio id="audio" controls class="audio-player"></audio>
+  
+    <p class="instruction">🎧 ಕೇಳಿ ಮತ್ತು ಹೇಳಿ</p>
+  
+    <div id="letter-buttons"></div>
+  
+    <div class="controls">
+      <button id="recordBtn" class="btn record">🎙️ ಆರಂಭ</button>
+      <button id="stopBtn" class="btn stop" disabled>⏹️ ನಿಲ್ಲಿಸಿ</button>
+      <button id="analyzeBtn" class="btn analyze" disabled>🧠 ಪರಿಶೀಲನೆ</button>
+      
+      <p id="status" class="status-text"></p>
+    </div>
+  
+    <!-- <pre id="resultBox"></pre> -->
+    <button onclick="nextWord()" class="next-btn">👉 ಮುಂದಿನ ಪದ</button>
+  
+  </div>
+
+  <script src="js/screening.js"></script>
+  <script src="assets/js/auto-record.js"></script>
+
+</body>
+</html>
+
+<!-- <div style="background: #fff3e0; border-radius: 20px; padding: 20px; max-width: 600px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align:center;">
+  <h2 id="word" style="font-size: 36px; color:#4e342e;"></h2>
+  <img id="image" style="width:300px; height:300px; border-radius: 12px;" />
+  <audio id="audio" controls ></audio>
+
+  <div id="letter-buttons" style="margin-top: 20px;"></div>
+
+  <div style="margin-top:20px;">
+    <button id="recordBtn">🎙️ Start</button>
+    <button id="stopBtn" disabled>⏹️ Stop</button>
+    <button id="analyzeBtn" disabled>🧠 Analyze</button>
+    <p id="status"></p>
+  </div>
+
+  <pre id="resultBox"></pre>
+  <button onclick="nextWord()">ಮುಂದಿನ ಪದ</button>
+
+</div> -->
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಪರೀಕ್ಷೆ</title>
+  <link rel="stylesheet" href="css/style.css">
+ 
+</head>
+<body>
+  
+<div style="background: #fff3e0; border-radius: 20px; padding: 20px; max-width: 600px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+  <h2 id="word" style="font-size: 36px;"></h2>
+  <img id="image" style="width:300px; height:300px; border-radius: 12px;" />
+  <audio id="audio" controls ></audio>
+  <div id="letter-buttons" style="margin-top: 20px;"></div>
+  
+  <button onclick="nextWord()">ಮುಂದಿನ ಪದ</button>
+</div>
+
+  <script src="js/screening.js"></script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಪರೀಕ್ಷೆ</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div style="background:#fff3e0;border-radius:20px;padding:20px;max-width:600px;margin:auto;text-align:center;">
+  
+  <h2 id="word" style="font-size:36px;"></h2>
+  <img id="image" style="width:300px;height:300px;border-radius:12px;" />
+  <audio id="audio" controls></audio>
+
+  <div id="letter-buttons" style="margin-top:20px;"></div>
+
+  <div style="margin-top:20px;">
+    <button id="recordBtn">🎙️ Start</button>
+    <button id="stopBtn" disabled>⏹️ Stop</button>
+    <button id="analyzeBtn" disabled>🧠 Analyze</button>
+    <p id="status"></p>
+  </div>
+
+  <pre id="resultBox"></pre>
+
+  <button onclick="nextWord()">ಮುಂದಿನ ಪದ</button>
+</div>
+
+<script src="js/screening.js"></script>
+</body>
+</html> -->

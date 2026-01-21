@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಕನ್ನಡ ಉಚ್ಛಾರಣಾ ಪರೀಕ್ಷಣಾ ಸಾಧನ</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <!-- Lottie Files Animation Script -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body style="text-align: center; background: linear-gradient(to bottom right, #fef9f9, #d1c4e9); padding-top: 50px; font-family: 'Noto Sans Kannada', sans-serif;">
+  <!-- ✅ header.html (Reusable Header Component) -->
+  <div id="global-header"></div>
+
+  <h1 style="font-size: 40px; color: #4a148c;padding-top: 20px;">ಕನ್ನಡ ಮಾತು ಗುರುತಿಸುವ ಸಾಧನ</h1>
+
+  <!-- Add this animation -->
+  <lottie-player 
+    src="https://assets1.lottiefiles.com/packages/lf20_jcikwtux.json"
+    background="transparent"
+    speed="1"
+    style="width: 300px; height: 300px; margin: 0 auto;"
+    loop
+    autoplay>
+  </lottie-player>
+
+  <!-- Start Button -->
+  <a href="access.html" style="background: #ff4081; color: white; padding: 15px 30px; font-size: 20px; border-radius: 30px; text-decoration: none;" id="startBtn">ಆರಂಭಿಸಿ</a>
+  
+</body>
+
+<script>
+function toggleChildDetailsDropdown(e) {
+  e.preventDefault();
+  const dropdown = document.getElementById('childDetailsDropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+function fetchHeaderChildDetails() {
+  const age = document.getElementById('headerAgeFilter').value;
+  const search = document.getElementById('headerSearchBar').value;
+  let url = 'http://localhost:3000/api/children?';
+  if (age) url += `age=${age}&`;
+  if (search) url += `search=${encodeURIComponent(search)}&`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => renderHeaderChildDetailsTable(data));
+}
+
+function renderHeaderChildDetailsTable(children) {
+  const container = document.getElementById('headerChildDetailsResults');
+  if (!children.length) {
+    container.innerHTML = '<div style="color:#b71c1c;">ಯಾವುದೇ ವಿವರಗಳು ಲಭ್ಯವಿಲ್ಲ</div>';
+    return;
+  }
+  let html = '<table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;font-size:14px;">';
+  html += '<tr style="background:#ede7f6;"><th style="padding:6px;">ಹೆಸರು</th><th style="padding:6px;">ವಯಸ್ಸು</th><th style="padding:6px;">ಪೋಷಕರು</th><th style="padding:6px;">ನಗರ</th></tr>';
+  for (const c of children) {
+    html += `<tr><td style='padding:6px;border-bottom:1px solid #eee;'>${c.name}</td><td style='padding:6px;border-bottom:1px solid #eee;'>${c.age}</td><td style='padding:6px;border-bottom:1px solid #eee;'>${c.parent||''}</td><td style='padding:6px;border-bottom:1px solid #eee;'>${c.city||''}</td></tr>`;
+  }
+  html += '</table>';
+  container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('headerAgeFilter').addEventListener('change', fetchHeaderChildDetails);
+  document.getElementById('headerSearchBar').addEventListener('keyup', function(e) {
+    if (e.key === 'Enter') fetchHeaderChildDetails();
+  });
+});
+// Hide dropdown when clicking outside
+window.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('childDetailsDropdown');
+  const tab = document.getElementById('childDetailsTab');
+  if (!dropdown.contains(e.target) && e.target !== tab) {
+    dropdown.style.display = 'none';
+  }
+});
+</script>
+<script src="js/header.js"></script>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಮಾಹಿತಿ ನಮೂದಿಸಿ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Lottie Files Animation Script -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body>
+   <!-- ✅ header.html (Reusable Header Component) -->
+   <div id="global-header"></div>
+  <lottie-player 
+  src="https://assets2.lottiefiles.com/packages/lf20_tutvdkg0.json"
+  background="transparent"
+  speed="1"
+  style="width: 250px; height: 250px; margin: auto;"
+  loop
+  autoplay>
+ </lottie-player>
+
+
+
+  <form class="form" onsubmit="handleDemographics(event)">
+    <h2>ಮಗುವಿನ ವಿವರವನ್ನು ನಮೂದಿಸಿ</h2>
+    <input type="text" id="name" placeholder="ಹೆಸರು*" required>
+    <select id="age" required>
+      <option value="" disabled selected>ವಯಸ್ಸು*</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+    </select>
+    
+    <select id="gender" required>
+      <option value="" disabled selected>ಲಿಂಗ*</option>
+      <option value="male">ಪುರುಷ</option>
+      <option value="female">ಹೆಣ್ಣು</option>
+      <option value="other">ಇತರ</option>
+    </select>
+    
+    <input type="text" id="parent" placeholder="ಪೋಷಕರ ಹೆಸರು*" required>
+    <input type="text" id="city" placeholder="ನಗರ*" required>
+    <input type="email" id="email" placeholder="ಇಮೇಲ್*" required>
+    <input type="text" id="address" placeholder="ವಿಳಾಸ">
+    <input type="tel" id="phone" placeholder="ದೂರವಾಣಿ ಸಂಖ್ಯೆ">
+    <button type="submit">ಮುಂದೆ ಸಾಗು</button>
+  </form>
+
+  <script src="js/app.js"></script>
+  <script src="js/header.js"></script>
+</body>
+</html>

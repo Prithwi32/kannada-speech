@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಅಂತಿಮ ವರದಿ</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+<body>
+   <!-- ✅ header.html (Reusable Header Component) -->
+   <div id="global-header"></div>
+<!-- 
+  <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_1pxqjqps.json"
+                 background="transparent" speed="1" style="width: 150px; height: 150px; margin:auto;"
+                 loop autoplay></lottie-player> -->
+
+  <h2 style="text-align:center; color:#2e7d32;">ಶುಭಾಶಯಗಳು! ನಿಮ್ಮ ವರದಿ ಇಲ್ಲಿದೆ</h2>
+
+  <div id="report-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3>ಅಂತಿಮ ವರದಿ</h3>
+      <button id="downloadReportBtn" style="background: #4caf50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">
+        📄 ವರದಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ
+      </button>
+    </div>
+    <canvas id="progressChart" width="400" height="200" style="margin-bottom:16px;"></canvas>
+    <div style="margin-bottom:24px;">
+      
+      <div id="report-history" style="margin-top:10px;"></div>
+    </div>
+    <div id="report"></div>
+    <canvas id="sodaPieChart" width="600" height="600" style="display:block; margin: 8px auto;"></canvas>
+    <p><strong>ಸರಿಯಾಗಿ ಉಚ್ಚಾರಿಸಿದ ಪದಗಳು:</strong> <span id="correct-list"></span></p>
+    <p><strong>ತಪ್ಪಾಗಿ ಉಚ್ಚಾರಿಸಿದ ಪದಗಳು:</strong> <span id="wrong-list"></span></p>
+    <!-- <p><strong>ತಪ್ಪಾಗಿ ಉಚ್ಚಾರಿಸಿದ ಅಕ್ಷರಗಳು:</strong> <span id="wrong-letter-list"></span></p> -->
+    <p><strong>ಅಭ್ಯಾಸ ಮಾಡಬೇಕಾದ ಅಕ್ಷರಗಳು:</strong> <span id="practice-list"></span></p>
+    <p><strong>ಸಲಹೆ:</strong> <span id="suggestion"></span></p>
+  </div>
+  
+
+  <script src="js/report.js"></script>
+  <script src="js/header.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <title>ಅಂತಿಮ ವರದಿ</title>
+  <link rel="stylesheet" href="css/style.css">
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body>
+  <lottie-player 
+  src="https://assets2.lottiefiles.com/packages/lf20_1pxqjqps.json"
+  background="transparent"
+  speed="1"
+  style="width: 200px; height: 200px; margin: auto;"
+  loop
+  autoplay>
+</lottie-player>
+
+<h2 style="text-align:center; color:#2e7d32;">ಶುಭಾಶಯಗಳು! ನಿಮ್ಮ ವರದಿ ಇಲ್ಲಿದೆ</h2>
+
+  <div id="report-container">
+    <h2>ಅಂತಿಮ ವರದಿ</h2>
+    <div id="report"></div>
+  </div>
+  <script src="js/report.js"></script>
+</body>
+</html> -->

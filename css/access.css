@@ -1,0 +1,63 @@
+.access-title {
+  font-size: 2.2rem;
+  color: #4a148c;
+  margin-top: 60px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.access-options {
+  margin: 40px auto 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  background: #f3e5f5;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #7c43bd22;
+  padding: 40px 30px;
+  max-width: 500px;
+  align-items: center;
+}
+
+.access-btn {
+  display: inline-block;
+  padding: 18px 36px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px #7c43bd11;
+  border: none;
+  outline: none;
+}
+.access-btn.register {
+  background: #ff4081;
+  color: #fff;
+}
+.access-btn.login {
+  background: #7c43bd;
+  color: #fff;
+}
+.access-btn:hover {
+  background: #fff;
+  color: #4a148c;
+  box-shadow: 0 4px 16px #7c43bd33;
+  border: 2px solid #4a148c;
+}
+@media (max-width: 700px) {
+  .access-options {
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 8px;
+    max-width: 98vw;
+  }
+  .access-title {
+    font-size: 1.3rem;
+    margin-top: 30px;
+  }
+  .access-btn {
+    font-size: 1rem;
+    padding: 12px 18px;
+  }
+} 
