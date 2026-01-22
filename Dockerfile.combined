@@ -41,10 +41,12 @@ COPY backend/soda_analysis.py ./backend/
 COPY backend/audio2text ./backend/audio2text
 COPY backend/syllable_Comparision ./backend/syllable_Comparision
 COPY backend/utils ./backend/utils
-COPY backend/uploads ./backend/uploads
 
 # Copy txt2ipa with setup.py
 COPY backend/txt2ipa ./backend/txt2ipa
+
+# Create uploads directory for runtime
+RUN mkdir -p /app/backend/uploads
 
 # Install Python dependencies
 WORKDIR /app/backend
