@@ -18,17 +18,21 @@ const PYTHON_BACKEND_URL =
   process.env.PYTHON_BACKEND_URL || "http://localhost:5000";
 const DATA_PATH = path.join(__dirname, "assets", "data", "children.json");
 
-// Connect to MongoDB (optional, falls back to JSON if not available)
-connectDB().catch((err) => {
-  console.warn("⚠️  MongoDB not available, using JSON fallback");
-});
-
 // Check if MongoDB is connected
 const useDatabase = () => {
   return require("mongoose").connection.readyState === 1;
 };
 
-// Optional font paths (add these files to assets/fonts to enable Unicode/IPA)
+// Start server after attempting MongoDB connection
+(async () => {
+  // Try to connect to MongoDB
+  try {
+    await connectDB();
+  } catch (err) {
+    console.warn("⚠️  MongoDB not available, using JSON fallback");
+  }
+
+  // Optional font paths (add these files to assets/fonts to enable Unicode/IPA)
 const FONT_KANNADA_VAR = path.join(
   __dirname,
   "assets",
@@ -481,6 +485,7 @@ app.post("/api/generate-report", (req, res) => {
   }
 });
 
+// Start server (wrapped in async function at top)
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📊 TTS endpoint: http://localhost:${PORT}/tts?text=ಅಮ್ಮ`);
@@ -489,3 +494,5 @@ app.listen(PORT, () => {
   console.log(`☁️  Storage: ${cloudStorage.useCloud ? "Azure Blob" : "Local"}`);
   console.log(`🔐 Admin user: ${ADMIN_CREDENTIALS.username}`);
 });
+
+})(); // End of async function
