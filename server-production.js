@@ -1,3 +1,37 @@
+// Child login endpoint (by numeric id)
+app.post("/api/children/login", async (req, res) => {
+  try {
+    if (!useDatabase()) {
+      // Fallback to JSON
+      let children = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
+      const { id, phone } = req.body;
+      const child = children.find((c) => c.id === Number(id));
+      if (child) {
+        // Optionally check phone
+        if (phone && child.phone && child.phone !== phone) {
+          return res.status(401).json({ error: "Phone number does not match" });
+        }
+        return res.json(child);
+      } else {
+        return res.status(404).json({ error: "Child not found" });
+      }
+    } else {
+      // Use MongoDB
+      const { id, phone } = req.body;
+      if (!id) return res.status(400).json({ error: "Child ID required" });
+      const child = await Child.findOne({ id: Number(id) });
+      if (!child) return res.status(404).json({ error: "Child not found" });
+      // Optionally check phone
+      if (phone && child.phone && child.phone !== phone) {
+        return res.status(401).json({ error: "Phone number does not match" });
+      }
+      return res.json(child);
+    }
+  } catch (error) {
+    console.error("Error in child login:", error);
+    res.status(500).json({ error: "Login failed" });
+  }
+});
 // server-production.js - Production-ready version with DB support
 require("dotenv").config();
 const express = require("express");
@@ -179,13 +213,25 @@ app.post("/api/children", async (req, res) => {
   try {
     if (useDatabase()) {
       // Use MongoDB
-      const newChild = new Child(req.body);
+      const childData = { ...req.body };
+      // Ensure phone is always present (even if empty string)
+      if (!childData.phone) childData.phone = "";
+      // Only allow fields defined in schema
+      const allowedFields = [
+        "name", "age", "gender", "parent", "city", "email", "address", "phone"
+      ];
+      const filteredData = {};
+      for (const key of allowedFields) {
+        if (childData[key] !== undefined) filteredData[key] = childData[key];
+      }
+      const newChild = new Child(filteredData);
       await newChild.save();
       return res.status(201).json(newChild);
     } else {
       // Fallback to JSON
       let children = JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
       const newChild = req.body;
+      if (!newChild.phone) newChild.phone = "";
       newChild.id = children.length ? children[children.length - 1].id + 1 : 1;
       children.push(newChild);
       fs.writeFileSync(DATA_PATH, JSON.stringify(children, null, 2));

@@ -20,6 +20,7 @@ const reportSchema = new mongoose.Schema({
 });
 
 const childSchema = new mongoose.Schema({
+  id: { type: Number, unique: true, index: true }, // Sequential numeric id
   name: { type: String, required: true },
   age: { type: Number, required: true },
   gender: { type: String, required: true },
@@ -34,8 +35,21 @@ const childSchema = new mongoose.Schema({
 });
 
 // Update the updatedAt timestamp before saving
-childSchema.pre("save", function (next) {
+childSchema.pre("save", async function (next) {
   this.updatedAt = Date.now();
+  if (this.isNew && (this.id === undefined || this.id === null)) {
+    try {
+      const Counter = require("./Counter");
+      const counter = await Counter.findByIdAndUpdate(
+        { _id: "childId" },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+      );
+      this.id = counter.seq;
+    } catch (err) {
+      return next(err);
+    }
+  }
   next();
 });
 

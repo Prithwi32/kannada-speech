@@ -10,6 +10,7 @@ document
       city: document.getElementById("city").value,
       email: document.getElementById("email").value,
       address: document.getElementById("address").value,
+      phone: document.getElementById("phone").value,
     };
 
     // Fetch all children to check for duplicates
@@ -37,22 +38,17 @@ document
       return;
     }
 
-    // Generate unique ID (increment last or use Date.now())
-    const newId = children.length
-      ? Math.max(...children.map((c) => c.id || 0)) + 1
-      : 1;
-    details.id = newId;
-
-    // Register new child
-    await fetch(`${API_BASE_URL}/api/children`, {
+    // Register new child (let server assign id)
+    const regRes = await fetch(`${API_BASE_URL}/api/children`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(details),
     });
+    const regChild = await regRes.json();
 
     // Show the ID to the user
     alert(
-      `ನಿಮ್ಮ ಮಕ್ಕಳ ಸಂಖ್ಯೆ (Child ID): ${newId}\nದಯವಿಟ್ಟು ಇದನ್ನು ಉಳಿಸಿ. ಮುಂದಿನ ಬಾರಿ ಇದನ್ನು ಬಳಸಿ ಲಾಗಿನ್ ಆಗಿ.`,
+      `ನಿಮ್ಮ ಮಕ್ಕಳ ಸಂಖ್ಯೆ (Child ID): ${regChild.id}\nದಯವಿಟ್ಟು ಇದನ್ನು ಉಳಿಸಿ. ಮುಂದಿನ ಬಾರಿ ಇದನ್ನು ಬಳಸಿ ಲಾಗಿನ್ ಆಗಿ.`,
     );
     // Navigate to login page after alert is dismissed
     setTimeout(() => {
