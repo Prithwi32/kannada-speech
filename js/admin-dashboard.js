@@ -32,13 +32,13 @@ async function loadChildrenData() {
 // Update statistics
 function updateStats(children) {
   const totalChildren = children.length;
-  const maleChildren = children.filter((child) => child.ಲಿಂಗ === "Male").length;
+  const maleChildren = children.filter((child) => child.gender === "Male").length;
   const femaleChildren = children.filter(
-    (child) => child.ಲಿಂಗ === "Female",
+    (child) => child.gender === "Female",
   ).length;
 
   const totalAge = children.reduce(
-    (sum, child) => sum + parseInt(child.ವಯಸ್ಸು || 0),
+    (sum, child) => sum + parseInt(child.age || 0),
     0,
   );
   const avgAge = totalChildren > 0 ? Math.round(totalAge / totalChildren) : 0;
@@ -64,14 +64,14 @@ function displayChildrenTable(children) {
       (child) => `
     <tr>
       <td>${child.id || ""}</td>
-      <td>${child.ಹೆಸರು || ""}</td>
-      <td>${child.ವಯಸ್ಸು || ""}</td>
-      <td>${child.ಲಿಂಗ || ""}</td>
-      <td>${child.ಪೋಷಕರು || ""}</td>
-      <td>${child.ನಗರ || ""}</td>
-      <td>${child.ಇಮೇಲ್ || ""}</td>
-      <td>${child.ವಿಳಾಸ || ""}</td>
-      <td>${child.ದೂರವಾಣಿ || ""}</td>
+      <td>${child.name || ""}</td>
+      <td>${child.age || ""}</td>
+      <td>${child.gender || ""}</td>
+      <td>${child.parent || ""}</td>
+      <td>${child.city || ""}</td>
+      <td>${child.email || ""}</td>
+      <td>${child.address || ""}</td>
+      <td>${child.phone || ""}</td>
     </tr>
   `,
     )
@@ -92,10 +92,10 @@ function setupSearchAndFilter(allChildren) {
     if (searchTerm) {
       filteredChildren = filteredChildren.filter(
         (child) =>
-          (child.ಹೆಸರು && child.ಹೆಸರು.toLowerCase().includes(searchTerm)) ||
-          (child.ಪೋಷಕರು && child.ಪೋಷಕರು.toLowerCase().includes(searchTerm)) ||
-          (child.ನಗರ && child.ನಗರ.toLowerCase().includes(searchTerm)) ||
-          (child.ಇಮೇಲ್ && child.ಇಮೇಲ್.toLowerCase().includes(searchTerm)),
+          (child.name && child.name.toLowerCase().includes(searchTerm)) ||
+          (child.parent && child.parent.toLowerCase().includes(searchTerm)) ||
+          (child.city && child.city.toLowerCase().includes(searchTerm)) ||
+          (child.email && child.email.toLowerCase().includes(searchTerm)),
       );
     }
 
@@ -103,7 +103,7 @@ function setupSearchAndFilter(allChildren) {
     const selectedAge = ageFilter.value;
     if (selectedAge) {
       filteredChildren = filteredChildren.filter(
-        (child) => String(child.ವಯಸ್ಸು).trim() === selectedAge,
+        (child) => String(child.age).trim() === selectedAge,
       );
     }
 
@@ -111,7 +111,7 @@ function setupSearchAndFilter(allChildren) {
     const selectedGender = genderFilter.value;
     if (selectedGender) {
       filteredChildren = filteredChildren.filter(
-        (child) => child.ಲಿಂಗ === selectedGender,
+        (child) => child.gender === selectedGender,
       );
     }
 

@@ -1,14 +1,14 @@
 function handleDemographics(e) {
   e.preventDefault();
   const details = {
-    ಹೆಸರು: document.getElementById("name").value,
-    ವಯಸ್ಸು: document.getElementById("age").value,
-    ಲಿಂಗ: document.getElementById("gender").value,
-    ಪೋಷಕರು: document.getElementById("parent").value,
-    ನಗರ: document.getElementById("city").value,
-    ಇಮೇಲ್: document.getElementById("email").value,
-    ವಿಳಾಸ: document.getElementById("address").value,
-    ದೂರವಾಣಿ: document.getElementById("phone").value,
+    name: document.getElementById("name").value,
+    age: document.getElementById("age").value,
+    gender: document.getElementById("gender").value,
+    parent: document.getElementById("parent").value,
+    city: document.getElementById("city").value,
+    email: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+    phone: document.getElementById("phone").value,
   };
   fetch(`${API_BASE_URL}/api/children`, {
     method: "POST",

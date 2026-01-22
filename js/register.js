@@ -3,13 +3,13 @@ document
   .addEventListener("submit", async function (e) {
     e.preventDefault();
     const details = {
-      ಹೆಸರು: document.getElementById("name").value,
-      ವಯಸ್ಸು: document.getElementById("age").value,
-      ಲಿಂಗ: document.getElementById("gender").value,
-      ಪೋಷಕರು: document.getElementById("parent").value,
-      ನಗರ: document.getElementById("city").value,
-      ಇಮೇಲ್: document.getElementById("email").value,
-      ವಿಳಾಸ: document.getElementById("address").value,
+      name: document.getElementById("name").value,
+      age: document.getElementById("age").value,
+      gender: document.getElementById("gender").value,
+      parent: document.getElementById("parent").value,
+      city: document.getElementById("city").value,
+      email: document.getElementById("email").value,
+      address: document.getElementById("address").value,
     };
 
     // Fetch all children to check for duplicates
@@ -19,11 +19,11 @@ document
     // Check if child with same details already exists
     const existingChild = children.find(
       (child) =>
-        child.ಹೆಸರು === details.ಹೆಸರು &&
-        child.ವಯಸ್ಸು === details.ವಯಸ್ಸು &&
-        child.ಲಿಂಗ === details.ಲಿಂಗ &&
-        child.ಪೋಷಕರು === details.ಪೋಷಕರು &&
-        child.ಇಮೇಲ್ === details.ಇಮೇಲ್,
+        child.name === details.name &&
+        child.age === details.age &&
+        child.gender === details.gender &&
+        child.parent === details.parent &&
+        child.email === details.email,
     );
 
     if (existingChild) {

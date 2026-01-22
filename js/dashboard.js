@@ -15,7 +15,7 @@ function checkUserAuth() {
   // Display user name
   const userNameElement = document.getElementById('userName');
   if (userNameElement) {
-    userNameElement.textContent = user.ಹೆಸರು || user.name || 'ಬಳಕೆದಾರ';
+    userNameElement.textContent = user.name || 'ಬಳಕೆದಾರ';
   }
 }
 

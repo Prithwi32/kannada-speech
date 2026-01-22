@@ -48,26 +48,26 @@ async function loadProfile() {
 // Display profile data
 function displayProfile(child) {
   // Set values for display
-  document.getElementById("nameValue").textContent = child.ಹೆಸರು || "";
-  document.getElementById("ageValue").textContent = child.ವಯಸ್ಸು || "";
+  document.getElementById("nameValue").textContent = child.name || "";
+  document.getElementById("ageValue").textContent = child.age || "";
   document.getElementById("genderValue").textContent = getGenderDisplay(
-    child.ಲಿಂಗ,
+    child.gender,
   );
-  document.getElementById("parentValue").textContent = child.ಪೋಷಕರು || "";
-  document.getElementById("cityValue").textContent = child.ನಗರ || "";
-  document.getElementById("emailValue").textContent = child.ಇಮೇಲ್ || "";
-  document.getElementById("addressValue").textContent = child.ವಿಳಾಸ || "";
-  document.getElementById("phoneValue").textContent = child.ದೂರವಾಣಿ || "";
+  document.getElementById("parentValue").textContent = child.parent || "";
+  document.getElementById("cityValue").textContent = child.city || "";
+  document.getElementById("emailValue").textContent = child.email || "";
+  document.getElementById("addressValue").textContent = child.address || "";
+  document.getElementById("phoneValue").textContent = child.phone || "";
 
   // Set values for inputs
-  document.getElementById("nameInput").value = child.ಹೆಸರು || "";
-  document.getElementById("ageInput").value = child.ವಯಸ್ಸು || "";
-  document.getElementById("genderInput").value = child.ಲಿಂಗ || "";
-  document.getElementById("parentInput").value = child.ಪೋಷಕರು || "";
-  document.getElementById("cityInput").value = child.ನಗರ || "";
-  document.getElementById("emailInput").value = child.ಇಮೇಲ್ || "";
-  document.getElementById("addressInput").value = child.ವಿಳಾಸ || "";
-  document.getElementById("phoneInput").value = child.ದೂರವಾಣಿ || "";
+  document.getElementById("nameInput").value = child.name || "";
+  document.getElementById("ageInput").value = child.age || "";
+  document.getElementById("genderInput").value = child.gender || "";
+  document.getElementById("parentInput").value = child.parent || "";
+  document.getElementById("cityInput").value = child.city || "";
+  document.getElementById("emailInput").value = child.email || "";
+  document.getElementById("addressInput").value = child.address || "";
+  document.getElementById("phoneInput").value = child.phone || "";
 }
 
 // Get gender display text
@@ -124,24 +124,24 @@ async function saveProfile() {
     // Collect updated data
     const updatedData = {
       ...originalData,
-      ಹೆಸರು: document.getElementById("nameInput").value,
-      ವಯಸ್ಸು: document.getElementById("ageInput").value,
-      ಲಿಂಗ: document.getElementById("genderInput").value,
-      ಪೋಷಕರು: document.getElementById("parentInput").value,
-      ನಗರ: document.getElementById("cityInput").value,
-      ಇಮೇಲ್: document.getElementById("emailInput").value,
-      ವಿಳಾಸ: document.getElementById("addressInput").value,
-      ದೂರವಾಣಿ: document.getElementById("phoneInput").value,
+      name: document.getElementById("nameInput").value,
+      age: document.getElementById("ageInput").value,
+      gender: document.getElementById("genderInput").value,
+      parent: document.getElementById("parentInput").value,
+      city: document.getElementById("cityInput").value,
+      email: document.getElementById("emailInput").value,
+      address: document.getElementById("addressInput").value,
+      phone: document.getElementById("phoneInput").value,
     };
 
     // Validate required fields
     if (
-      !updatedData.ಹೆಸರು ||
-      !updatedData.ವಯಸ್ಸು ||
-      !updatedData.ಲಿಂಗ ||
-      !updatedData.ಪೋಷಕರು ||
-      !updatedData.ನಗರ ||
-      !updatedData.ಇಮೇಲ್
+      !updatedData.name ||
+      !updatedData.age ||
+      !updatedData.gender ||
+      !updatedData.parent ||
+      !updatedData.city ||
+      !updatedData.email
     ) {
       showError("ದಯವಿಟ್ಟು ಎಲ್ಲಾ ಅಗತ್ಯ ಕ್ಷೇತ್ರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ");
       return;
