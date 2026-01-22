@@ -23,16 +23,7 @@ const useDatabase = () => {
   return require("mongoose").connection.readyState === 1;
 };
 
-// Start server after attempting MongoDB connection
-(async () => {
-  // Try to connect to MongoDB
-  try {
-    await connectDB();
-  } catch (err) {
-    console.warn("⚠️  MongoDB not available, using JSON fallback");
-  }
-
-  // Optional font paths (add these files to assets/fonts to enable Unicode/IPA)
+// Optional font paths (add these files to assets/fonts to enable Unicode/IPA)
 const FONT_KANNADA_VAR = path.join(
   __dirname,
   "assets",
@@ -74,6 +65,12 @@ function summarizeSODA(results = []) {
   return summary;
 }
 
+// Admin credentials (from environment variables)
+const ADMIN_CREDENTIALS = {
+  username: process.env.ADMIN_USERNAME || "admin",
+  password: process.env.ADMIN_PASSWORD || "admin123",
+};
+
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
@@ -89,6 +86,15 @@ app.use(express.json());
 
 // Serve static files (place this before API routes)
 app.use(express.static("."));
+
+// Start server after attempting MongoDB connection
+(async () => {
+  // Try to connect to MongoDB
+  try {
+    await connectDB();
+  } catch (err) {
+    console.warn("⚠️  MongoDB not available, using JSON fallback");
+  }
 
 app.get("/tts", async (req, res) => {
   try {
@@ -125,12 +131,13 @@ app.get("/tts", async (req, res) => {
 // API to get children by age and search (supports both MongoDB and JSON fallback)
 app.get("/api/children", async (req, res) => {
   try {
-    const { age, search } = req.query;
+    const { age, search, gender } = req.query;
 
     if (useDatabase()) {
       // Use MongoDB
       let query = {};
       if (age) query.age = parseInt(age);
+      if (gender) query.gender = new RegExp(`^${gender}$`, "i"); // Case-insensitive gender match
       if (search) {
         query.$or = [
           { name: new RegExp(search, "i") },
@@ -182,6 +189,13 @@ app.post("/api/children", async (req, res) => {
       const childData = { ...req.body };
       // Ensure phone is always present (even if empty string)
       if (!childData.phone) childData.phone = "";
+      // Normalize gender to proper case
+      if (childData.gender) {
+        const genderLower = childData.gender.toLowerCase();
+        if (genderLower === "male") childData.gender = "Male";
+        else if (genderLower === "female") childData.gender = "Female";
+        else if (genderLower === "other") childData.gender = "Other";
+      }
       // Only allow fields defined in schema
       const allowedFields = [
         "name", "age", "gender", "parent", "city", "email", "address", "phone"
@@ -213,10 +227,18 @@ app.post("/api/children", async (req, res) => {
 app.put("/api/children/:id", async (req, res) => {
   try {
     if (useDatabase()) {
-      // Use MongoDB
-      const child = await Child.findByIdAndUpdate(
-        req.params.id,
-        { $set: req.body },
+      // Use MongoDB - search by custom id field, not _id
+      const updateData = { ...req.body };
+      // Normalize gender to proper case
+      if (updateData.gender) {
+        const genderLower = updateData.gender.toLowerCase();
+        if (genderLower === "male") updateData.gender = "Male";
+        else if (genderLower === "female") updateData.gender = "Female";
+        else if (genderLower === "other") updateData.gender = "Other";
+      }
+      const child = await Child.findOneAndUpdate(
+        { id: parseInt(req.params.id) },
+        { $set: updateData },
         { new: true, runValidators: true },
       );
       if (!child) {
@@ -253,8 +275,8 @@ app.put("/api/children/:id", async (req, res) => {
 app.post("/api/children/:id/report", async (req, res) => {
   try {
     if (useDatabase()) {
-      // Use MongoDB
-      const child = await Child.findById(req.params.id);
+      // Use MongoDB - search by custom id field, not _id
+      const child = await Child.findOne({ id: parseInt(req.params.id) });
       if (!child) {
         return res.status(404).json({ error: "Child not found" });
       }
@@ -314,8 +336,8 @@ app.post("/api/children/:id/report", async (req, res) => {
 app.get("/api/children/:id/reports", async (req, res) => {
   try {
     if (useDatabase()) {
-      // Use MongoDB
-      const child = await Child.findById(req.params.id).select("reports");
+      // Use MongoDB - search by custom id field, not _id
+      const child = await Child.findOne({ id: parseInt(req.params.id) }).select("reports");
       if (!child) {
         return res.status(404).json({ error: "Child not found" });
       }
@@ -357,12 +379,6 @@ app.get("/download-reference-pdf", (req, res) => {
   });
   doc.end();
 });
-
-// Admin credentials (from environment variables)
-const ADMIN_CREDENTIALS = {
-  username: process.env.ADMIN_USERNAME || "admin",
-  password: process.env.ADMIN_PASSWORD || "admin123",
-};
 
 // Child login endpoint (by numeric id)
 app.post("/api/children/login", async (req, res) => {
@@ -470,47 +486,109 @@ app.post("/api/generate-report", (req, res) => {
     doc.pipe(res);
 
     // Register Kannada font if available
-    if (fs.existsSync(FONT_KANNADA)) {
+    const useKannadaFont = fs.existsSync(FONT_KANNADA);
+    if (useKannadaFont) {
       doc.registerFont("Kannada", FONT_KANNADA);
+      doc.registerFont("KannadaBold", FONT_KANNADA); // Use same font for bold
     }
     if (fs.existsSync(FONT_LATIN)) {
       doc.registerFont("Latin", FONT_LATIN);
     }
 
+    // Kannada translations
+    const labels = {
+      title: "ಕನ್ನಡ ಮಾತು ಮೌಲ್ಯಮಾಪನ ವರದಿ",
+      childDetails: "ಮಗುವಿನ ವಿವರಗಳು:",
+      name: "ಹೆಸರು:",
+      age: "ವಯಸ್ಸು:",
+      gender: "ಲಿಂಗ:",
+      parent: "ಪೋಷಕರು:",
+      city: "ನಗರ:",
+      summaryTitle: "SODA ವಿಶ್ಲೇಷಣೆ ಸಾರಾಂಶ:",
+      correct: "ಸರಿ:",
+      substitution: "ಬದಲಿ:",
+      omission: "ಕಳೆದುಹೋಗಿದೆ:",
+      addition: "ಸೇರಿಸಿದೆ:",
+      distortion: "ವಿರೂಪ:",
+      detailedAnalysis: "ವಿವರವಾದ ವಿಶ್ಲೇಷಣೆ:",
+      word: "ಪದ:",
+      error: "ದೋಷ:",
+      recommendations: "ಶಿಫಾರಸುಗಳು:",
+      na: "ಲಭ್ಯವಿಲ್ಲ",
+      // Gender translations
+      male: "ಪುರುಷ",
+      female: "ಹೆಣ್ಣು",
+      other: "ಇತರ",
+      // Error type translations
+      correctType: "ಸರಿ",
+      substitutionType: "ಬದಲಿ",
+      omissionType: "ಕಳೆದುಹೋಗಿದೆ",
+      additionType: "ಸೇರಿಸಿದೆ",
+      distortionType: "ವಿರೂಪ"
+    };
+
+    // Helper function to translate gender
+    const translateGender = (gender) => {
+      if (!gender) return labels.na;
+      const g = gender.toLowerCase();
+      if (g === "male") return labels.male;
+      if (g === "female") return labels.female;
+      if (g === "other") return labels.other;
+      return gender;
+    };
+
+    // Helper function to translate error type
+    const translateErrorType = (errorType) => {
+      if (!errorType) return labels.na;
+      const e = errorType.toLowerCase();
+      if (e === "correct") return labels.correctType;
+      if (e === "substitution") return labels.substitutionType;
+      if (e === "omission") return labels.omissionType;
+      if (e === "addition") return labels.additionType;
+      if (e === "distortion") return labels.distortionType;
+      return errorType;
+    };
+
+    // Set default font to Kannada if available, otherwise Helvetica
+    const defaultFont = useKannadaFont ? "Kannada" : "Helvetica";
+    const boldFont = useKannadaFont ? "KannadaBold" : "Helvetica-Bold";
+
     // Title
     doc
       .fontSize(20)
-      .font("Helvetica-Bold")
-      .text("Kannada Speech Assessment Report", { align: "center" });
+      .font(boldFont)
+      .text(labels.title, { align: "center" });
     doc.moveDown();
 
     // Child details
-    doc.fontSize(14).font("Helvetica-Bold").text("Child Details:");
-    doc.fontSize(12).font("Helvetica");
-    doc.text(`Name: ${child.name || "N/A"}`);
-    doc.text(`Age: ${child.age || "N/A"}`);
-    doc.text(`Gender: ${child.gender || "N/A"}`);
-    doc.text(`Parent: ${child.parent || "N/A"}`);
-    doc.text(`City: ${child.city || "N/A"}`);
+    doc.fontSize(14).font(boldFont).text(labels.childDetails);
+    doc.fontSize(12).font(defaultFont);
+    doc.text(`${labels.name} ${child.name || labels.na}`);
+    doc.text(`${labels.age} ${child.age || labels.na}`);
+    doc.text(`${labels.gender} ${translateGender(child.gender)}`);
+    doc.text(`${labels.parent} ${child.parent || labels.na}`);
+    doc.text(`${labels.city} ${child.city || labels.na}`);
     doc.moveDown();
 
     // Summary
-    doc.fontSize(14).font("Helvetica-Bold").text("SODA Analysis Summary:");
-    doc.fontSize(12).font("Helvetica");
-    doc.text(`Correct: ${summary.Correct}`);
-    doc.text(`Substitution: ${summary.Substitution}`);
-    doc.text(`Omission: ${summary.Omission}`);
-    doc.text(`Addition: ${summary.Addition}`);
-    doc.text(`Distortion: ${summary.Distortion}`);
+    doc.fontSize(14).font(boldFont).text(labels.summaryTitle);
+    doc.fontSize(12).font(defaultFont);
+    doc.text(`${labels.correct} ${summary.Correct}`);
+    doc.text(`${labels.substitution} ${summary.Substitution}`);
+    doc.text(`${labels.omission} ${summary.Omission}`);
+    doc.text(`${labels.addition} ${summary.Addition}`);
+    doc.text(`${labels.distortion} ${summary.Distortion}`);
     doc.moveDown();
 
     // Detailed results
     if (sodaResults.length > 0) {
-      doc.fontSize(14).font("Helvetica-Bold").text("Detailed Analysis:");
-      doc.fontSize(10).font("Helvetica");
+      doc.fontSize(14).font(boldFont).text(labels.detailedAnalysis);
+      doc.fontSize(10).font(defaultFont);
       sodaResults.forEach((item, index) => {
+        const errorType = translateErrorType(item.error_type);
+        const wordText = item.word || labels.na;
         doc.text(
-          `${index + 1}. Word: ${item.word || "N/A"}, Error: ${item.error_type || "N/A"}`,
+          `${index + 1}. ${labels.word} ${wordText}, ${labels.error} ${errorType}`,
         );
       });
       doc.moveDown();
@@ -518,8 +596,8 @@ app.post("/api/generate-report", (req, res) => {
 
     // Suggestions
     if (suggestions.length > 0) {
-      doc.fontSize(14).font("Helvetica-Bold").text("Recommendations:");
-      doc.fontSize(12).font("Helvetica");
+      doc.fontSize(14).font(boldFont).text(labels.recommendations);
+      doc.fontSize(12).font(defaultFont);
       suggestions.forEach((sugg, idx) => {
         doc.text(`${idx + 1}. ${sugg}`);
       });

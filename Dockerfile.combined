@@ -52,9 +52,9 @@ RUN mkdir -p /app/backend/uploads
 WORKDIR /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install txt2ipa local package
+# Install txt2ipa local package if setup.py exists
 WORKDIR /app/backend/txt2ipa
-RUN pip install --no-cache-dir -e .
+RUN if [ -f setup.py ]; then pip install --no-cache-dir -e .; else echo "setup.py not found, skipping txt2ipa installation"; fi
 
 # Setup supervisord to run both servers
 WORKDIR /app

@@ -32,9 +32,11 @@ async function loadChildrenData() {
 // Update statistics
 function updateStats(children) {
   const totalChildren = children.length;
-  const maleChildren = children.filter((child) => child.gender === "Male").length;
+  const maleChildren = children.filter((child) => 
+    child.gender && child.gender.toLowerCase() === "male"
+  ).length;
   const femaleChildren = children.filter(
-    (child) => child.gender === "Female",
+    (child) => child.gender && child.gender.toLowerCase() === "female",
   ).length;
 
   const totalAge = children.reduce(
@@ -111,7 +113,7 @@ function setupSearchAndFilter(allChildren) {
     const selectedGender = genderFilter.value;
     if (selectedGender) {
       filteredChildren = filteredChildren.filter(
-        (child) => child.gender === selectedGender,
+        (child) => child.gender && child.gender.toLowerCase() === selectedGender.toLowerCase(),
       );
     }
 
