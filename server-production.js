@@ -676,13 +676,13 @@ app.use(express.static("."));
       // Validate inputs
       if (!req.body.target_word) {
         return res.status(400).json({
-          error: "Missing target_word parameter"
+          error: "Missing target_word parameter",
         });
       }
 
       if (!req.file) {
         return res.status(400).json({
-          error: "Missing audio file"
+          error: "Missing audio file",
         });
       }
 
@@ -725,13 +725,13 @@ app.use(express.static("."));
         // Python backend returned an error
         console.error("Python backend error:", error.response.data);
         res.status(error.response.status).json(error.response.data);
-      } else if (error.code === 'ECONNREFUSED') {
+      } else if (error.code === "ECONNREFUSED") {
         // Python backend not accessible
         res.status(503).json({
           error: "Python backend unavailable",
           details: `Cannot connect to ${PYTHON_BACKEND_URL}. Make sure Flask server is running.`,
         });
-      } else if (error.code === 'ETIMEDOUT') {
+      } else if (error.code === "ETIMEDOUT") {
         res.status(504).json({
           error: "Request timeout",
           details: "Python backend took too long to respond",
