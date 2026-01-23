@@ -64,6 +64,7 @@ RUN echo "[supervisord]\n\
     [program:python-backend]\n\
     command=python backend/app.py\n\
     directory=/app\n\
+    environment=PYTHON_PORT=5000,FFMPEG_PATH=/usr/bin/ffmpeg\n\
     autostart=true\n\
     autorestart=true\n\
     stderr_logfile=/dev/stderr\n\
@@ -74,6 +75,7 @@ RUN echo "[supervisord]\n\
     [program:node-backend]\n\
     command=node server.js\n\
     directory=/app\n\
+    environment=PORT=3000,PYTHON_BACKEND_URL=http://localhost:5000\n\
     autostart=true\n\
     autorestart=true\n\
     stderr_logfile=/dev/stderr\n\
@@ -84,9 +86,9 @@ RUN echo "[supervisord]\n\
 # Expose port
 EXPOSE 3000
 
-# Health check
+# Health check - verify both Node.js and Python are running
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:3000/api/children || exit 1
+    CMD curl -f http://localhost:3000/health || exit 1
 
 # Start both servers with supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
