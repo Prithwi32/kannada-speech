@@ -637,26 +637,66 @@ app.use(express.static("."));
     }
   });
 
+  // Health check endpoint
+  app.get("/health", async (req, res) => {
+    const health = {
+      nodejs: "OK",
+      timestamp: new Date().toISOString(),
+      pythonBackend: {
+        url: PYTHON_BACKEND_URL,
+        status: "unknown",
+      },
+    };
+
+    try {
+      // Try to reach Python backend
+      const pythonResponse = await axios.get(`${PYTHON_BACKEND_URL}/`, {
+        timeout: 3000,
+      });
+      health.pythonBackend.status = "OK";
+    } catch (error) {
+      health.pythonBackend.status = "ERROR";
+      health.pythonBackend.error = error.message;
+      health.pythonBackend.code = error.code;
+    }
+
+    const statusCode = health.pythonBackend.status === "OK" ? 200 : 503;
+    res.status(statusCode).json(health);
+  });
+
   // Proxy endpoint for Python SODA analysis
   app.post("/analyze_soda", upload.single("audio"), async (req, res) => {
     try {
-      const formData = new FormData();
-      
-      // Add target_word from request body
-      if (req.body.target_word) {
-        formData.append("target_word", req.body.target_word);
-      }
-      
-      // Add audio file from multer
-      if (req.file) {
-        formData.append("audio", req.file.buffer, {
-          filename: req.file.originalname || "recording.wav",
-          contentType: req.file.mimetype,
+      // Log incoming request details
+      console.log("📥 Received SODA request:");
+      console.log("  - target_word:", req.body.target_word);
+      console.log("  - file present:", !!req.file);
+      console.log("  - file size:", req.file?.size || 0);
+
+      // Validate inputs
+      if (!req.body.target_word) {
+        return res.status(400).json({
+          error: "Missing target_word parameter"
         });
       }
 
-      console.log(`🔗 Proxying SODA request to ${PYTHON_BACKEND_URL}/analyze_soda`);
-      
+      if (!req.file) {
+        return res.status(400).json({
+          error: "Missing audio file"
+        });
+      }
+
+      const formData = new FormData();
+      formData.append("target_word", req.body.target_word);
+      formData.append("audio", req.file.buffer, {
+        filename: req.file.originalname || "recording.wav",
+        contentType: req.file.mimetype,
+      });
+
+      console.log(
+        `🔗 Proxying SODA request to ${PYTHON_BACKEND_URL}/analyze_soda`,
+      );
+
       const response = await axios.post(
         `${PYTHON_BACKEND_URL}/analyze_soda`,
         formData,
@@ -666,20 +706,41 @@ app.use(express.static("."));
           },
           maxContentLength: Infinity,
           maxBodyLength: Infinity,
-        }
+          timeout: 60000, // 60 second timeout
+        },
       );
 
       console.log("✅ SODA analysis successful");
       res.json(response.data);
     } catch (error) {
-      console.error("❌ SODA proxy error:", error.message);
+      console.error("❌ SODA proxy error:", error);
+      console.error("Error details:", {
+        message: error.message,
+        code: error.code,
+        response: error.response?.data,
+        status: error.response?.status,
+      });
+
       if (error.response) {
+        // Python backend returned an error
         console.error("Python backend error:", error.response.data);
         res.status(error.response.status).json(error.response.data);
+      } else if (error.code === 'ECONNREFUSED') {
+        // Python backend not accessible
+        res.status(503).json({
+          error: "Python backend unavailable",
+          details: `Cannot connect to ${PYTHON_BACKEND_URL}. Make sure Flask server is running.`,
+        });
+      } else if (error.code === 'ETIMEDOUT') {
+        res.status(504).json({
+          error: "Request timeout",
+          details: "Python backend took too long to respond",
+        });
       } else {
         res.status(500).json({
           error: "Failed to analyze audio",
-          details: error.message,
+          details: error.message || "Unknown error occurred",
+          code: error.code,
         });
       }
     }

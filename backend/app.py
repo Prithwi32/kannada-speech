@@ -17,6 +17,16 @@ UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
+@app.route("/", methods=["GET"])
+def health_check():
+    """Health check endpoint for monitoring"""
+    return jsonify({
+        "status": "OK",
+        "service": "Flask SODA Analysis Backend",
+        "version": "1.0"
+    })
+
+
 @app.route("/analyze_soda", methods=["POST"])
 def analyze_soda():
     try:

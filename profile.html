@@ -1,295 +1,345 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="kn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ಮಗುವಿನ ಪ್ರೊಫೈಲ್</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .profile-container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 2rem;
-    }
-
-    .profile-header {
-      text-align: center;
-      margin-bottom: 2rem;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 2rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    .profile-title {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      font-weight: bold;
-    }
-
-    .profile-subtitle {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-
-    .profile-card {
-      background: white;
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      margin-bottom: 2rem;
-    }
-
-    .profile-section {
-      margin-bottom: 2rem;
-    }
-
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #667eea;
-      padding-bottom: 0.5rem;
-    }
-
-    .profile-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .profile-field {
-      margin-bottom: 1rem;
-    }
-
-    .field-label {
-      display: block;
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .field-value {
-      padding: 0.75rem;
-      background: #f8f9fa;
-      border: 1px solid #dee2e6;
-      border-radius: 8px;
-      color: #333;
-      font-size: 1rem;
-      min-height: 20px;
-    }
-
-    .field-input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 2px solid #dee2e6;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s;
-    }
-
-    .field-input:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-top: 2rem;
-    }
-
-    .btn {
-      padding: 12px 24px;
-      border: none;
-      border-radius: 25px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      min-width: 120px;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #6c757d;
-      color: white;
-    }
-
-    .btn-success {
-      background: #28a745;
-      color: white;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .back-btn {
-      background: #6c757d;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin-bottom: 1rem;
-    }
-
-    .back-btn:hover {
-      background: #5a6268;
-    }
-
-    .edit-mode .field-value {
-      display: none;
-    }
-
-    .edit-mode .field-input {
-      display: block;
-    }
-
-    .view-mode .field-input {
-      display: none;
-    }
-
-    .view-mode .field-value {
-      display: block;
-    }
-
-    .success-message {
-      background: #d4edda;
-      color: #155724;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      text-align: center;
-      display: none;
-    }
-
-    .error-message {
-      background: #f8d7da;
-      color: #721c24;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      text-align: center;
-      display: none;
-    }
-
-    @media (max-width: 768px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ಮಗುವಿನ ಪ್ರೊಫೈಲ್</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
       .profile-container {
-        padding: 0 1rem;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 2rem;
       }
-      
+
+      .profile-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .profile-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+
+      .profile-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .profile-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+      }
+
+      .profile-section {
+        margin-bottom: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 0.5rem;
+      }
+
       .profile-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
       }
-      
+
+      .profile-field {
+        margin-bottom: 1rem;
+      }
+
+      .field-label {
+        display: block;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .field-value {
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        color: #333;
+        font-size: 1rem;
+        min-height: 20px;
+      }
+
+      .field-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #dee2e6;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .field-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
       .action-buttons {
-        flex-direction: column;
-        align-items: center;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
       }
-    }
-  </style>
-</head>
-<body>
-  <div id="global-header"></div>
 
-  <div class="profile-container">
-    <button class="back-btn" onclick="goBack()">← ಹಿಂದೆ ಹೋಗಿ</button>
-    
-    <div class="profile-header">
-      <div class="profile-title">ಮಗುವಿನ ಪ್ರೊಫೈಲ್</div>
-      <div class="profile-subtitle">ನಿಮ್ಮ ಮಗುವಿನ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಸಂಪಾದಿಸಿ</div>
-    </div>
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 120px;
+      }
 
-    <div id="successMessage" class="success-message"></div>
-    <div id="errorMessage" class="error-message"></div>
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
 
-    <div class="profile-card view-mode" id="profileCard">
-      <div class="profile-section">
-        <div class="section-title">ಮೂಲ ವಿವರಗಳು</div>
-        <div class="profile-grid">
-          <div class="profile-field">
-            <label class="field-label">ಹೆಸರು</label>
-            <div class="field-value" id="nameValue"></div>
-            <input type="text" class="field-input" id="nameInput" placeholder="ಹೆಸರು">
-          </div>
-          <div class="profile-field">
-            <label class="field-label">ವಯಸ್ಸು</label>
-            <div class="field-value" id="ageValue"></div>
-            <select class="field-input" id="ageInput">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-            </select>
-          </div>
-          <div class="profile-field">
-            <label class="field-label">ಲಿಂಗ</label>
-            <div class="field-value" id="genderValue"></div>
-            <select class="field-input" id="genderInput">
-              <option value="Male">ಪುರುಷ</option>
-              <option value="Female">ಹೆಣ್ಣು</option>
-              <option value="Other">ಇತರ</option>
-            </select>
-          </div>
-          <div class="profile-field">
-            <label class="field-label">ಪೋಷಕರು</label>
-            <div class="field-value" id="parentValue"></div>
-            <input type="text" class="field-input" id="parentInput" placeholder="ಪೋಷಕರ ಹೆಸರು">
-          </div>
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-success {
+        background: #28a745;
+        color: white;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .back-btn {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-bottom: 1rem;
+      }
+
+      .back-btn:hover {
+        background: #5a6268;
+      }
+
+      .edit-mode .field-value {
+        display: none;
+      }
+
+      .edit-mode .field-input {
+        display: block;
+      }
+
+      .view-mode .field-input {
+        display: none;
+      }
+
+      .view-mode .field-value {
+        display: block;
+      }
+
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: none;
+      }
+
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        text-align: center;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .profile-container {
+          padding: 0 1rem;
+        }
+
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="global-header"></div>
+
+    <div class="profile-container">
+      <button class="back-btn" onclick="goBack()">← ಹಿಂದೆ ಹೋಗಿ</button>
+
+      <div class="profile-header">
+        <div class="profile-title">ಮಗುವಿನ ಪ್ರೊಫೈಲ್</div>
+        <div class="profile-subtitle">
+          ನಿಮ್ಮ ಮಗುವಿನ ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ ಮತ್ತು ಸಂಪಾದಿಸಿ
         </div>
       </div>
 
-      <div class="profile-section">
-        <div class="section-title">ಸಂಪರ್ಕ ವಿವರಗಳು</div>
-        <div class="profile-grid">
-          <div class="profile-field">
-            <label class="field-label">ನಗರ</label>
-            <div class="field-value" id="cityValue"></div>
-            <input type="text" class="field-input" id="cityInput" placeholder="ನಗರ">
-          </div>
-          <div class="profile-field">
-            <label class="field-label">ಇಮೇಲ್</label>
-            <div class="field-value" id="emailValue"></div>
-            <input type="email" class="field-input" id="emailInput" placeholder="ಇಮೇಲ್">
-          </div>
-          <div class="profile-field">
-            <label class="field-label">ವಿಳಾಸ</label>
-            <div class="field-value" id="addressValue"></div>
-            <input type="text" class="field-input" id="addressInput" placeholder="ವಿಳಾಸ">
-          </div>
-          <div class="profile-field">
-            <label class="field-label">ದೂರವಾಣಿ ಸಂಖ್ಯೆ</label>
-            <div class="field-value" id="phoneValue"></div>
-            <input type="tel" class="field-input" id="phoneInput" placeholder="ದೂರವಾಣಿ ಸಂಖ್ಯೆ">
+      <div id="successMessage" class="success-message"></div>
+      <div id="errorMessage" class="error-message"></div>
+
+      <div class="profile-card view-mode" id="profileCard">
+        <div class="profile-section">
+          <div class="section-title">ಮೂಲ ವಿವರಗಳು</div>
+          <div class="profile-grid">
+            <div class="profile-field">
+              <label class="field-label">ಹೆಸರು</label>
+              <div class="field-value" id="nameValue"></div>
+              <input
+                type="text"
+                class="field-input"
+                id="nameInput"
+                placeholder="ಹೆಸರು"
+              />
+            </div>
+            <div class="profile-field">
+              <label class="field-label">ವಯಸ್ಸು</label>
+              <div class="field-value" id="ageValue"></div>
+              <select class="field-input" id="ageInput">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+              </select>
+            </div>
+            <div class="profile-field">
+              <label class="field-label">ಲಿಂಗ</label>
+              <div class="field-value" id="genderValue"></div>
+              <select class="field-input" id="genderInput">
+                <option value="Male">ಪುರುಷ</option>
+                <option value="Female">ಹೆಣ್ಣು</option>
+                <option value="Other">ಇತರ</option>
+              </select>
+            </div>
+            <div class="profile-field">
+              <label class="field-label">ಪೋಷಕರು</label>
+              <div class="field-value" id="parentValue"></div>
+              <input
+                type="text"
+                class="field-input"
+                id="parentInput"
+                placeholder="ಪೋಷಕರ ಹೆಸರು"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="action-buttons">
-        <button class="btn btn-primary" id="editBtn" onclick="toggleEdit()">ಬದಲಾವಣೆ</button>
-        <button class="btn btn-success" id="saveBtn" onclick="saveProfile()" style="display: none;">ಉಳಿಸಿ</button>
-        <button class="btn btn-secondary" id="cancelBtn" onclick="cancelEdit()" style="display: none;">ರದ್ದುಮಾಡಿ</button>
+        <div class="profile-section">
+          <div class="section-title">ಸಂಪರ್ಕ ವಿವರಗಳು</div>
+          <div class="profile-grid">
+            <div class="profile-field">
+              <label class="field-label">ನಗರ</label>
+              <div class="field-value" id="cityValue"></div>
+              <input
+                type="text"
+                class="field-input"
+                id="cityInput"
+                placeholder="ನಗರ"
+              />
+            </div>
+            <div class="profile-field">
+              <label class="field-label">ಇಮೇಲ್</label>
+              <div class="field-value" id="emailValue"></div>
+              <input
+                type="email"
+                class="field-input"
+                id="emailInput"
+                placeholder="ಇಮೇಲ್"
+              />
+            </div>
+            <div class="profile-field">
+              <label class="field-label">ವಿಳಾಸ</label>
+              <div class="field-value" id="addressValue"></div>
+              <input
+                type="text"
+                class="field-input"
+                id="addressInput"
+                placeholder="ವಿಳಾಸ"
+              />
+            </div>
+            <div class="profile-field">
+              <label class="field-label">ದೂರವಾಣಿ ಸಂಖ್ಯೆ</label>
+              <div class="field-value" id="phoneValue"></div>
+              <input
+                type="tel"
+                class="field-input"
+                id="phoneInput"
+                placeholder="ದೂರವಾಣಿ ಸಂಖ್ಯೆ"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="editBtn" onclick="toggleEdit()">
+            ಬದಲಾವಣೆ
+          </button>
+          <button
+            class="btn btn-success"
+            id="saveBtn"
+            onclick="saveProfile()"
+            style="display: none"
+          >
+            ಉಳಿಸಿ
+          </button>
+          <button
+            class="btn btn-secondary"
+            id="cancelBtn"
+            onclick="cancelEdit()"
+            style="display: none"
+          >
+            ರದ್ದುಮಾಡಿ
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="js/config.js"></script>`n  <script src="js/profile.js"></script>
-  <script src="js/config.js"></script>`n  <script src="js/header.js"></script>
-</body>
-</html> 
+    <script src="js/config.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/header.js"></script>
+  </body>
+</html>
