@@ -25,6 +25,8 @@ __pycache__/
 # Git
 .git/
 .gitignore
+# Don't ignore backend/txt2ipa even if it has .git
+!backend/txt2ipa/**
 
 # Docker
 Dockerfile*
