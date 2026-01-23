@@ -1,15 +1,16 @@
 // assets/js/auto-record.js
 
-let mediaRecorder, audioChunks = [];
+let mediaRecorder,
+  audioChunks = [];
 let audioBlob;
 
 // HTML elements
-const recordBtn = document.getElementById('recordBtn');
-const stopBtn = document.getElementById('stopBtn');
-const analyzeBtn = document.getElementById('analyzeBtn');
-const recording_status = document.getElementById('status');
-const resultBox = document.getElementById('resultBox');
-const wordDisplay = document.getElementById('word'); // Word shown on screen
+const recordBtn = document.getElementById("recordBtn");
+const stopBtn = document.getElementById("stopBtn");
+const analyzeBtn = document.getElementById("analyzeBtn");
+const recording_status = document.getElementById("status");
+const resultBox = document.getElementById("resultBox");
+const wordDisplay = document.getElementById("word"); // Word shown on screen
 
 recordBtn.onclick = async () => {
   try {
@@ -17,11 +18,12 @@ recordBtn.onclick = async () => {
     mediaRecorder = new MediaRecorder(stream);
     audioChunks = [];
 
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
     mediaRecorder.onstop = () => {
-      audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      audioBlob = new Blob(audioChunks, { type: "audio/wav" });
       console.log("🎤 Audio blob ready:", audioBlob);
-      recording_status.textContent = "✅ Recording completed! Ready for analysis.";
+      recording_status.textContent =
+        "✅ Recording completed! Ready for analysis.";
       analyzeBtn.disabled = false;
     };
 
@@ -29,7 +31,6 @@ recordBtn.onclick = async () => {
     recording_status.textContent = "🎙️ Recording... Speak clearly in Kannada!";
     recordBtn.disabled = true;
     stopBtn.disabled = false;
-
   } catch (err) {
     alert("Microphone access denied or unavailable.");
     console.error("🎙️ Microphone error:", err);
@@ -66,9 +67,9 @@ analyzeBtn.onclick = async () => {
 
   try {
     console.log("📡 Sending request to Flask backend...");
-    const response = await fetch("http://127.0.0.1:5000/analyze_soda", {
+    const response = await fetch(`${PYTHON_API_URL}/analyze_soda`, {
       method: "POST",
-      body: formData
+      body: formData,
     });
 
     let result;
@@ -80,7 +81,7 @@ analyzeBtn.onclick = async () => {
       recording_status.textContent = "⚠️ Invalid JSON from server.";
       return;
     }
-    
+
     if (result.error) {
       recording_status.textContent = "❌ Error: " + result.error;
       resultBox.textContent = "";
@@ -88,8 +89,6 @@ analyzeBtn.onclick = async () => {
       recording_status.textContent = "✅ SODA analysis completed!";
       resultBox.textContent = JSON.stringify(result, null, 2);
     }
-    
-    
 
     // const result = await response.json();
     // console.log("📬 Response:", result);
@@ -101,7 +100,6 @@ analyzeBtn.onclick = async () => {
     //   status.textContent = "❌ Error: " + result.error;
     //   resultBox.textContent = "";
     // }
-
   } catch (err) {
     console.error("⚠️ Connection failed:", err);
     recording_status.textContent = "⚠️ Failed to connect to backend.";

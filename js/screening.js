@@ -272,7 +272,7 @@ analyzeBtn.onclick = async () => {
   analyzeBtn.disabled = true;
 
   try {
-    const res = await fetch("http://127.0.0.1:5000/analyze_soda", {
+    const res = await fetch(`${PYTHON_API_URL}/analyze_soda`, {
       method: "POST",
       body: formData,
     });
