@@ -5,6 +5,8 @@ const axios = require("axios");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+const FormData = require("form-data");
 const PDFDocument = require("pdfkit");
 const sizeOf = require("image-size");
 const connectDB = require("./config/database");
@@ -92,6 +94,9 @@ app.use(
   }),
 );
 app.use(express.json());
+
+// Setup multer for handling file uploads
+const upload = multer({ storage: multer.memoryStorage() });
 
 // Serve static files (place this before API routes)
 app.use(express.static("."));
@@ -629,6 +634,54 @@ app.use(express.static("."));
     } catch (error) {
       console.error("Error generating PDF:", error);
       res.status(500).json({ error: "Failed to generate report" });
+    }
+  });
+
+  // Proxy endpoint for Python SODA analysis
+  app.post("/analyze_soda", upload.single("audio"), async (req, res) => {
+    try {
+      const formData = new FormData();
+      
+      // Add target_word from request body
+      if (req.body.target_word) {
+        formData.append("target_word", req.body.target_word);
+      }
+      
+      // Add audio file from multer
+      if (req.file) {
+        formData.append("audio", req.file.buffer, {
+          filename: req.file.originalname || "recording.wav",
+          contentType: req.file.mimetype,
+        });
+      }
+
+      console.log(`🔗 Proxying SODA request to ${PYTHON_BACKEND_URL}/analyze_soda`);
+      
+      const response = await axios.post(
+        `${PYTHON_BACKEND_URL}/analyze_soda`,
+        formData,
+        {
+          headers: {
+            ...formData.getHeaders(),
+          },
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity,
+        }
+      );
+
+      console.log("✅ SODA analysis successful");
+      res.json(response.data);
+    } catch (error) {
+      console.error("❌ SODA proxy error:", error.message);
+      if (error.response) {
+        console.error("Python backend error:", error.response.data);
+        res.status(error.response.status).json(error.response.data);
+      } else {
+        res.status(500).json({
+          error: "Failed to analyze audio",
+          details: error.message,
+        });
+      }
     }
   });
 
