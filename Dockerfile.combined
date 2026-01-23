@@ -52,9 +52,21 @@ RUN mkdir -p /app/backend/uploads
 WORKDIR /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install txt2ipa local package if setup.py exists
+# Install txt2ipa local package - Force installation
 WORKDIR /app/backend/txt2ipa
-RUN if [ -f setup.py ]; then pip install --no-cache-dir -e .; else echo "setup.py not found, skipping txt2ipa installation"; fi
+RUN ls -la && \
+    if [ -f setup.py ]; then \
+        echo "Installing txt2ipa from setup.py..." && \
+        pip install --no-cache-dir -e . && \
+        python -c "import sys; sys.path.insert(0, '.'); from kannada2ipa.ipaconvert import kannada2ipa; print('✅ txt2ipa installed successfully')" ; \
+    else \
+        echo "⚠️ setup.py not found, installing manually..." && \
+        pip install --no-cache-dir -e /app/backend/txt2ipa/kannada2ipa ; \
+    fi
+
+# Verify txt2ipa installation
+RUN python -c "from txt2ipa.kannada2ipa.ipaconvert import kannada2ipa; print('✅ txt2ipa module verified')" || \
+    (echo "❌ txt2ipa installation failed" && exit 1)
 
 # Setup supervisord to run both servers
 WORKDIR /app
