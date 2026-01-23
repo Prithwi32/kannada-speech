@@ -60,17 +60,20 @@ RUN if [ -f setup.py ]; then pip install --no-cache-dir -e .; else echo "setup.p
 WORKDIR /app
 RUN echo "[supervisord]\n\
     nodaemon=true\n\
+    loglevel=info\n\
     \n\
     [program:python-backend]\n\
     command=python backend/app.py\n\
     directory=/app\n\
-    environment=PYTHON_PORT=5000,FFMPEG_PATH=/usr/bin/ffmpeg\n\
+    environment=PYTHON_PORT=5000,FFMPEG_PATH=/usr/bin/ffmpeg,UPLOAD_FOLDER=/app/backend/uploads\n\
     autostart=true\n\
     autorestart=true\n\
     stderr_logfile=/dev/stderr\n\
     stderr_logfile_maxbytes=0\n\
     stdout_logfile=/dev/stdout\n\
     stdout_logfile_maxbytes=0\n\
+    startsecs=10\n\
+    startretries=3\n\
     \n\
     [program:node-backend]\n\
     command=node server.js\n\
@@ -81,7 +84,9 @@ RUN echo "[supervisord]\n\
     stderr_logfile=/dev/stderr\n\
     stderr_logfile_maxbytes=0\n\
     stdout_logfile=/dev/stdout\n\
-    stdout_logfile_maxbytes=0" > /etc/supervisor/conf.d/supervisord.conf
+    stdout_logfile_maxbytes=0\n\
+    startsecs=5\n\
+    startretries=3" > /etc/supervisor/conf.d/supervisord.conf
 
 # Expose port
 EXPOSE 3000
