@@ -10,7 +10,6 @@ from utils.letter_identification import (
     identify_distortion,
 )
 import numpy as np
-import whisper
 
 
 

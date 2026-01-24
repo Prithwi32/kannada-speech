@@ -706,7 +706,7 @@ app.use(express.static("."));
           },
           maxContentLength: Infinity,
           maxBodyLength: Infinity,
-          timeout: 60000, // 60 second timeout
+          timeout: 120000, // 120 second timeout
         },
       );
 
