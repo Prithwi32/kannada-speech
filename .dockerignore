@@ -22,11 +22,20 @@ __pycache__/
 *.swo
 *~
 
-# Git
-# .git/
+# Git - exclude .git directories
+.git/
 .gitignore
-# Don't ignore backend/txt2ipa even if it has .git
-!backend/txt2ipa/**
+
+# But explicitly include txt2ipa package files (override exclusions)
+!backend/txt2ipa/
+!backend/txt2ipa/__init__.py
+!backend/txt2ipa/setup.py
+!backend/txt2ipa/README.md
+!backend/txt2ipa/LICENSE
+!backend/txt2ipa/CREDITS
+!backend/txt2ipa/kannada2ipa/
+!backend/txt2ipa/kannada2ipa/__init__.py
+!backend/txt2ipa/kannada2ipa/*.py
 
 # Docker
 Dockerfile*

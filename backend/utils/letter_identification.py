@@ -4,7 +4,7 @@ Utility functions to identify specific letters/syllables for each error type.
 Used for generating age-appropriate practice suggestions.
 """
 
-from txt2ipa.kannada2ipa.ipaconvert import ipa2kannada_value
+from kannada2ipa.ipaconvert import ipa2kannada_value
 
 def identify_omission(target_syllable, spoken_syllable):
     """

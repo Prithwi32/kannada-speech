@@ -42,8 +42,13 @@ COPY backend/audio2text ./backend/audio2text
 COPY backend/syllable_Comparision ./backend/syllable_Comparision
 COPY backend/utils ./backend/utils
 
-# Copy txt2ipa with setup.py
-COPY backend/txt2ipa ./backend/txt2ipa
+# Copy txt2ipa - copy each component explicitly to avoid .git/.gitignore issues
+COPY backend/txt2ipa/setup.py ./backend/txt2ipa/
+COPY backend/txt2ipa/__init__.py ./backend/txt2ipa/
+COPY backend/txt2ipa/LICENSE ./backend/txt2ipa/
+COPY backend/txt2ipa/README.md ./backend/txt2ipa/
+COPY backend/txt2ipa/CREDITS ./backend/txt2ipa/
+COPY backend/txt2ipa/kannada2ipa ./backend/txt2ipa/kannada2ipa
 
 # Create uploads directory for runtime
 RUN mkdir -p /app/backend/uploads
@@ -52,22 +57,9 @@ RUN mkdir -p /app/backend/uploads
 WORKDIR /app/backend
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Handle txt2ipa installation - check if files exist
-WORKDIR /app/backend
-RUN echo "Checking txt2ipa directory..." && \
-    ls -la txt2ipa/ && \
-    if [ -f txt2ipa/setup.py ]; then \
-    echo "✅ Found setup.py, installing txt2ipa..." && \
-    cd txt2ipa && \
-    pip install --no-cache-dir -e . && \
-    cd .. && \
-    python -c "from txt2ipa.kannada2ipa.ipaconvert import kannada2ipa; print('✅ txt2ipa installed and verified')" ; \
-    else \
-    echo "❌ txt2ipa files not copied properly!" && \
-    echo "Directory contents:" && \
-    find txt2ipa -type f && \
-    exit 1 ; \
-    fi
+# Add txt2ipa to Python path and verify import works
+ENV PYTHONPATH="/app/backend/txt2ipa:${PYTHONPATH}"
+RUN python -c "from kannada2ipa.ipaconvert import kannada2ipa; print('✅ kannada2ipa verified')"
 
 # Setup supervisord to run both servers
 WORKDIR /app

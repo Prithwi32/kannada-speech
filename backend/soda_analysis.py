@@ -19,7 +19,7 @@ from audio2text.a2t import convert_audio_to_kannada_text
 from syllable_Comparision.syllabify_main import syllabify
 
 
-from txt2ipa.kannada2ipa.ipaconvert import kannada2ipa
+from kannada2ipa.ipaconvert import kannada2ipa
 
 
 
